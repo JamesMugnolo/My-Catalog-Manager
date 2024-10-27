@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  NerdCasheApp:
+    container_name: NerdCashe_app
+    build: ./NerdCasheFE
+    image: NerdCasheFE:v1
+    environment:
+      REACT_APP_BASE_URL: ${REACT_APP_BASE_URL}
+    ports:
+      - "3000:3000"
+    networks:
+      nerd-cashe-fe-network:
+        ipv4_address: 172.28.127.3
+    volumes:
+      - app-data:/var/www/html
+
+volumes:
+  app-data:
+networks:
+  nerd-cashe-network:
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
