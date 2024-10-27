@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-image: linear-gradient(rgba(2, 2, 2, 0.2), rgba(0, 0, 0, 0.2)),
+    url("DarkWebsiteBackground.jpg");
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+}

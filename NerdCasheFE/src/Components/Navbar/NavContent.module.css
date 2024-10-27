@@ -1,0 +1,29 @@
+.signoutButton {
+  transition: transform 0.25s ease-in-out;
+  font-weight: 800;
+}
+.signoutButton:hover {
+  transform: scale(1.07);
+}
+.signoutButtonText:hover {
+  transform: scale(1);
+}
+.NavContentList {
+  display: flex;
+  color: white;
+  gap: 0.5rem;
+}
+.Mobile {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
+.Mobile li > a {
+  font-size: 1.5rem;
+  font-weight: lighter;
+}
+
+.Desktop {
+  flex-direction: row;
+}

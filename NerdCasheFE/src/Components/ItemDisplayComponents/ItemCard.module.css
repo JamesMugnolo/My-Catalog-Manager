@@ -1,0 +1,146 @@
+.displayCard {
+  height: auto;
+  width: 100%;
+  justify-self: center;
+  /* border-radius: 10px; */
+  background-color: rgba(0, 0, 0, 0);
+  transition: all 0.22s ease-in-out;
+  position: relative;
+  aspect-ratio: 0.75/1;
+}
+.displayCard:hover {
+  transform: scale(1.05);
+}
+.displayCard:active {
+  transform: scale(1.05);
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid #1976d2;
+}
+.displayImage,
+.displayOverlay {
+  height: 100%;
+  width: 100%;
+  /* border-radius: 10px; */
+  vertical-align: middle;
+  left: 0;
+  position: absolute;
+}
+.displayOverlay {
+  z-index: 2;
+  /* display: flex; */
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+.displayOverlay:hover {
+  background-color: rgba(2, 2, 21, 0.5);
+  transition: background-color 0.3s ease-in-out;
+  border: 2px solid #1976d2;
+}
+.infoButton > .displayOverlay:hover {
+  visibility: hidden;
+}
+.displayOverlay .displayOverlayButton {
+  visibility: hidden;
+}
+.displayOverlay:hover .displayOverlayButton {
+  visibility: visible;
+  transition: all 0.22s ease-in-out;
+}
+.displayOverlay:hover > .displayOverlayButtonActive {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  width: 40%;
+  height: 40%;
+  border-radius: 10px;
+}
+.CheckIcon {
+  color: white;
+  width: 100%;
+  height: 85%;
+  font-weight: bolder;
+}
+.CheckIcon:hover {
+  color: white;
+}
+.displayOverlayButton {
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  background-clip: padding-box;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  width: 40%;
+  height: 40%;
+  display: block;
+  /* margin-top: 4%;
+  margin-right: 3%; */
+  box-shadow: 0 0 0 1px #1976d2;
+  transition: all 0.22s ease-in-out;
+  margin: 0;
+  padding: 0;
+  outline-offset: 3px;
+}
+.displayOverlayButton:hover {
+  /* transform: scale(1.1); */
+  transition: all 0.22s ease-in-out;
+  color: white;
+  background-color: rgba(8, 62, 115, 0.512);
+}
+.displayOverlayActive {
+  background-color: rgba(0, 3, 34, 0.75);
+  border: 1.5px solid #1976d2;
+}
+.displayCardActive {
+  transform: scale(1);
+}
+.infoButton {
+  color: #1976d2;
+  padding: 0.25rem;
+  font-size: large;
+  z-index: 3;
+  
+}
+.displayOverlayButtonActive {
+  background-color: rgba(255, 255, 255, 0.3);
+  background-color: #1976d2;
+  top: 3%;
+  left: 97%;
+  position: absolute;
+  transform: translateX(-100%);
+  /* margin-top: 1%; */
+  /* margin-right: 2rem; */
+  width: 14%;
+  height: 11%;
+  border-radius: 50%;
+  display: block;
+  /* margin: .5rem; */
+  /* padding: .5rem; */
+  /* outline-offset: 0px; */
+  box-shadow: none;
+  box-shadow: 0 0 0 1px #1976d2;
+}
+
+.displayOverlayActive .displayOverlayButton {
+  visibility: visible;
+  background-color: rgba(255, 255, 255, 0.5);
+  /* transform: scale(1.1); */
+  background-color: #1976d2;
+  transition: all 0.22s ease-in-out;
+  box-shadow: 0 0 0 1px #1976d2;
+}
+@media (min-width: 500px) {
+  .imageGallery {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+  .carouselTitleContainer h1 {
+    font-size: 26px;
+  }
+}

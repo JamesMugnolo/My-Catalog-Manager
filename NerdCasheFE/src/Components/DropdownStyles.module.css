@@ -1,0 +1,85 @@
+.dropdown {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+.button {
+  background-color: #1976d2;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding-left: 0.5rem;
+  border-radius: 5px;
+  height: 100%;
+  flex-direction: column;
+  min-height: fit-content;
+}
+.buttonLabel {
+  margin-right: 1.5rem;
+  font-size: medium;
+  font-weight: bold;
+  letter-spacing: 0.25px;
+}
+.buttonContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 1.1rem;
+}
+.itemContainer {
+  background-color: white;
+  color: black;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.5rem;
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #222;
+  box-shadow: -1px 1px 30px 5px rgba(0, 0, 0, 0.75);
+  color: white;
+  z-index: 1;
+}
+.item {
+  width: 100%;
+  padding: 0.5rem;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+}
+.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  font-weight: normal;
+  pointer-events: none;
+}
+
+.item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.active:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+@media (max-width: 768px) {
+  .buttonLabel {
+    margin-right: 1rem;
+    font-size: 80%;
+    margin-bottom: -0.25rem;
+  }
+  .buttonContent {
+    font-size: 80%;
+  }
+  .dropdown {
+    height: 2.5rem;
+  }
+}
+@media (min-width: 768px) {
+}
+@media (min-width: 1024px) {
+}
+@media (min-width: 1500px) {
+}
+@media (min-width: 2000px) {
+}

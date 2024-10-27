@@ -1,0 +1,204 @@
+.mainContainer {
+  height: calc(100% - 60px);
+  width: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+}
+.searchSection {
+  height: 6%;
+  width: 100%;
+  position: relative;
+  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+.resultsSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 3rem;
+  margin-left: 0;
+}
+.itemDescriptionSection {
+  width: 30%;
+  min-width: 30%;
+  max-height: 100vh;
+  min-height: 0;
+  margin: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+.searchBar {
+  height: fit-content;
+  width: 100%;
+  border-radius: 10px;
+  display: flex;
+  position: relative;
+  box-shadow: -1px 1px 60px 5px rgba(0, 0, 0, 0.75);
+  align-items: center;
+  min-height: fit-content;
+  max-height: fit-content;
+  background-color: #222;
+  border-radius: 5px;
+  padding: 0.5rem;
+}
+.searchButton {
+  height: 80%;
+  width: fit-content;
+  border-radius: 5px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  position: relative;
+  background-color: #1976d2;
+  align-self: center;
+  transition: all 0.35s ease;
+}
+.collectionButtonGroup {
+  display: flex;
+  flex-direction: row;
+  box-shadow: -1px 1px 60px 5px rgba(0, 0, 0, 0.75);
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: #222;
+  flex-grow: 1;
+}
+.collectionButtontitle {
+  color: white;
+  /* margin-bottom: 1.5rem; */
+  font-size: 2rem;
+  font-weight: 100;
+  text-shadow: 0px 0px 5px white;
+  background-color: #222;
+  box-shadow: -1px 1px 60px 5px rgba(0, 0, 0, 0.75);
+  padding-top: 0.5rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.searchButton:hover {
+  transform: scale(1.05);
+}
+.searchText {
+  height: 80%;
+  border-radius: 5px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  padding-left: 1%;
+  background-color: rgba(255, 255, 255, 1);
+  display: flex;
+  align-items: center;
+  align-self: center;
+  flex-grow: 1;
+  border: none;
+}
+.CollectionSwapButtons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 150%;
+  margin-bottom: 3rem;
+  flex-grow: 1;
+}
+
+.inactiveButton {
+  font-size: 150%;
+  padding-left: 1rem;
+}
+.itemDisplaySection {
+  height: 90%;
+  width: 100%;
+  display: flex;
+  min-height: 0;
+}
+@media (max-width: 768px) {
+  .searchButton {
+    height: 2.5rem;
+  }
+  .searchText {
+    height: 2.5rem;
+  }
+  .itemDescriptionSection {
+    visibility: hidden;
+    opacity: 0;
+    display: none;
+  }
+  .resultsSection {
+    margin: 3rem;
+  }
+}
+@media (min-width: 300px) {
+  .resultsSection {
+    margin: 1rem;
+  }
+  .searchText {
+    font-size: 1rem;
+    margin-right: 0.5rem;
+  }
+  .searchSection {
+    margin-bottom: 1.25rem;
+  }
+}
+@media (min-width: 768px) {
+  .itemDescriptionSection {
+    width: 45%;
+    min-width: 45%;
+  }
+  .searchButton {
+    height: 3.25rem;
+  }
+  .searchText {
+    height: 3.25rem;
+    padding-left: 0;
+    margin-right: 0.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .CollectionSwapButtons {
+    font-size: 120%;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+  }
+  .collectionButtontitle {
+    font-size: 1.75rem;
+  }
+  .searchButton {
+    height: 3.25rem;
+  }
+  .searchText {
+    height: 3.25rem;
+    padding-left: 0;
+    margin-right: 0.5rem;
+  }
+}
+@media (min-width: 1600px) {
+  .itemDescriptionSection {
+    width: 35%;
+    min-width: 35%;
+  }
+  .searchButton {
+    height: 3.25rem;
+  }
+  .searchText {
+    height: 3.25rem;
+    padding-left: 0;
+    margin-right: 0.5rem;
+  }
+}
+@media (min-width: 2000px) {
+  .itemDescriptionSection {
+    width: 30%;
+    min-width: 30%;
+  }
+  .searchButton {
+    height: 3.25rem;
+  }
+  .searchText {
+    height: 3.25;
+    padding-left: 0;
+  }
+}

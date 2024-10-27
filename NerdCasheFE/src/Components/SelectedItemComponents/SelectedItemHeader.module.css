@@ -1,0 +1,21 @@
+.contributorContainer {
+  width: fit-content;
+  height: 300px;
+  max-height: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+.headerContainer {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  letter-spacing: 1px;
+  position: relative;
+
+  width: fit-content;
+}
+.titleContainer {
+  width: 100%;
+  display: flex;
+}

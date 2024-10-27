@@ -1,0 +1,142 @@
+.DescriptionContainer {
+  height: 20vh;
+
+  border-radius: 5px;
+  background-color: #222;
+  box-shadow: -1px 1px 30px 5px rgba(0, 0, 0, 0.75);
+  font-size: 18px;
+  padding: 1.5rem;
+  overflow: hidden;
+  /* flex-grow: 1; */
+}
+.arrowButton {
+  border-radius: 7px;
+  background-color: #222;
+  box-shadow: -1px 1px 30px 5px rgba(0, 0, 0, 0.75);
+  height: 4rem;
+  width: 4rem;
+  transition: transform 0.25s ease-in-out;
+}
+.arrowButton:hover {
+  transform: scale(1.1);
+}
+.DescriptionTextContainer {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+.DescriptionTextContainer::-webkit-scrollbar {
+  display: none;
+}
+.DescriptionScrollSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  flex: 1;
+  gap: 1rem;
+  align-items: center;
+  /* gap: 3rem; */
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+.DescriptionScrollbarContainer {
+  height: 100%;
+  width: 55%;
+  border-radius: 5px;
+  background-color: #222;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.DescriptionSection {
+  border-radius: 5px;
+  background-color: #222;
+  font-weight: lighter;
+  letter-spacing: 2px;
+  box-shadow: -1px 1px 30px 5px rgba(0, 0, 0, 0.75);
+  font-size: 18px;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+}
+.DescriptionScrollGutter {
+  width: 100%;
+  height: 100%;
+  padding: 4px;
+  padding-top: 0%;
+  padding-bottom: 0%;
+}
+.DescriptionScrollThumb {
+  background-color: white;
+  width: 100%;
+  border-radius: 4px;
+  position: relative;
+}
+.defaultContent {
+  display: flex;
+  font-size: 24px;
+  font-weight: bolder;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+@media (max-width: 768px) {
+  .arrowButton {
+    height: 2.25rem;
+    width: 2.25rem;
+  }
+  .DescriptionContainer {
+    padding: 0.5rem;
+    height: 25vh;
+  }
+  .DescriptionTextContainer {
+    font-size: 18px;
+    padding: 0.05rem;
+  }
+}
+@media (min-width: 768px) {
+  .arrowButton {
+    height: 2.25rem;
+    width: 2.25rem;
+  }
+  .DescriptionContainer {
+    padding: 0.5rem;
+  }
+  .DescriptionTextContainer {
+    font-size: 16px;
+    padding: 0.05rem;
+  }
+}
+@media (min-width: 1024px) {
+  .arrowButton {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+  .DescriptionTextContainer {
+    font-size: 18px;
+    padding: 0.15rem;
+  }
+}
+@media (min-width: 1500px) {
+  .arrowButton {
+    height: 2.75rem;
+    width: 2.75rem;
+  }
+  .DescriptionTextContainer {
+    font-size: 20px;
+    padding: 0.25rem;
+  }
+}
+@media (min-width: 2000px) {
+  .arrowButton {
+    height: 4rem;
+    width: 4rem;
+  }
+  .DescriptionTextContainer {
+    font-size: 24px;
+    padding: 0.5rem;
+  }
+}

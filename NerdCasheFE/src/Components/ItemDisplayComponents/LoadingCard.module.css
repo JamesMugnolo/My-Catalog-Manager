@@ -1,0 +1,42 @@
+.LoadingSection {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.HeaderContainer {
+  height: fit-content;
+  width: fit-content;
+  color: white;
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+  letter-spacing: 1px;
+}
+.LoadingWheelContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.LoadingWheel {
+  height: 125px;
+  width: 125px;
+  content: "";
+  border: 8px solid rgba(0, 0, 0, 0);
+  border-top-color: grey;
+  border-radius: 90%;
+  animation: loading 1s linear infinite;
+}
+@keyframes loading {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
