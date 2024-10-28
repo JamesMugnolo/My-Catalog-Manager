@@ -2,5 +2,9 @@
   background-image: url("../public/DarkWebsiteBackground.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  background-size: cover;
   
+}
+*::after { 
+    filter: blur(32px);
 }

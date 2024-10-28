@@ -119,9 +119,14 @@ export const SignInForm: FunctionComponent<IFormProps> = ({
       open={isModalOpen}
       handleClose={closeModal}
       title={isSignInForm ? "Sign In" : "Sign Up"}
-      styles={{ maxWidth: "600px", maxHeight: "auto" }}
+      styles={{ maxWidth: "100vw", maxHeight: "100vh", }}
     >
-      <form noValidate autoComplete="off">
+      <section style={{display: "flex", justifyContent: "center",alignItems: "center", height: "100%"}} onClick={e => {e.stopPropagation(); closeModal()}}>
+      <form noValidate autoComplete="off" onClick={e => {e.stopPropagation(); }} style={{background: "rgba( 117, 101, 101, 0.5 )",
+boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+backdropFilter: "blur( 20px )",
+borderRadius: "5px",padding: "1rem",width: "40%",height: "fit-content"}}>
+  <h1 style={{color: "white", fontSize: "2rem", width: "100%",textAlign: "center"}}>{isSignInForm ? "Sign In" : "Sign Up"}</h1>
         <TextFeild
           label="Username"
           helperText="please enter your username"
@@ -219,6 +224,7 @@ export const SignInForm: FunctionComponent<IFormProps> = ({
           </Button>
         </div>
       </form>
+      </section>
     </CustomModal>
   );
 };

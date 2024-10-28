@@ -10,7 +10,7 @@ interface IDynamicStyles {
 interface IModalProps {
   open: boolean;
   handleClose:
-    | ((event: unknown, reason: "backdropClick" | "escapeKeyDown") => void)
+    | ((event: unknown) => void)
     | undefined;
   title: string;
   children: any;
@@ -29,28 +29,13 @@ export const CustomModal: FunctionComponent<IModalProps> = ({
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
-      style={{ width: "100%", height: "100%" }}
+      style={{ width: "100%", height: "100%", background: "rgba( 0, 0, 0, 0.3 )",
+        boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+        backdropFilter: "blur( 28px )"}}
     >
-      <div>
-        <Box sx={styles}>
-          <Typography
-            id="modal-modal-title"
-            variant="h6"
-            component="h1"
-            sx={{
-              textAlign: "center",
-              fontWeight: "50",
-              fontSize: "2rem",
-              fontFamily: "ui-sans-serif",
-            }}
-          >
-            {title}
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 0 }}>
-            {children}
-          </Typography>
-        </Box>
-      </div>
+     {children}
+
+    
     </Modal>
   );
 };

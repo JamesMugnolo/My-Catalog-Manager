@@ -1,9 +1,9 @@
 version: "3.8"
 services:
-  NerdCasheApp:
+  nerdcasheapp:
     container_name: NerdCashe_app
     build: ./NerdCasheFE
-    image: NerdCasheFE:v1
+    image: nerdcashefe:v1
     environment:
       REACT_APP_BASE_URL: ${REACT_APP_BASE_URL}
     ports:
@@ -13,7 +13,7 @@ services:
         ipv4_address: 172.28.127.3
     volumes:
       - app-data:/var/www/html
-  NerdCasheserver:
+  nerdcasheserver:
     build: ./NerdCasheBE
     container_name: NerdCasheBE
     depends_on:
@@ -21,13 +21,14 @@ services:
     environment:
       TWITCH_CLIENT_ID: ${TWITCH_CLIENT_ID}
       TWITCH_CLIENT_SECRET: ${TWITCH_CLIENT_SECRET}
-      DATABASE: ${DATABASE)
+      DATABASE: ${DATABASE}
       DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD},
-      DB_HOST: ${DB_HOST},
-      DB_PORT: ${DB_PORT),
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: 172.28.127.1
+      DB_PORT: ${DB_PORT}
+      PORT: ${PORT}
     ports:
-      - "3001:4000"
+      - "4000:4000"
     networks:
       nerd-cashe-network:
         ipv4_address: 172.28.127.2
@@ -43,7 +44,7 @@ services:
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DATABASE)
+      POSTGRES_DB: ${DATABASE}
     ports:
       - "5432:5432"
     networks:
@@ -52,6 +53,8 @@ services:
 
 volumes:
   app-data:
+  pg-data:
+  server-data:
 networks:
   nerd-cashe-network:
     ipam:
