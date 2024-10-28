@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-
+import AboutStyles from "./About.module.css"
 export const About: FunctionComponent = () => {
-  return <div className="text-red-600">Welcome to the about page</div>;
+  return <div className={AboutStyles.mainContainer}>Welcome to the about page</div>;
 };

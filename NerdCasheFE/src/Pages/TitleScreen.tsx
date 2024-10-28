@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
 import { SignInForm } from "../Modals/SignInForm";
+import { About } from "./About";
 
 export const TitleScreen: FunctionComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -13,7 +14,7 @@ export const TitleScreen: FunctionComponent = () => {
       {isModalOpen ? (
         ""
       ) : (
-        <div className="text-red-600">This Is The Home Screen</div>
+        <About></About>
       )}
     </>
   );
