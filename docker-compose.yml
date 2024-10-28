@@ -9,10 +9,46 @@ services:
     ports:
       - "3000:3000"
     networks:
-      nerd-cashe-fe-network:
+      nerd-cashe-network:
         ipv4_address: 172.28.127.3
     volumes:
       - app-data:/var/www/html
+  NerdCasheserver:
+    build: ./NerdCasheBE
+    container_name: NerdCasheBE
+    depends_on:
+      - db
+    environment:
+      TWITCH_CLIENT_ID: ${TWITCH_CLIENT_ID}
+      TWITCH_CLIENT_SECRET: ${TWITCH_CLIENT_SECRET}
+      DATABASE: ${DATABASE)
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD},
+      DB_HOST: ${DB_HOST},
+      DB_PORT: ${DB_PORT),
+    ports:
+      - "3001:4000"
+    networks:
+      nerd-cashe-network:
+        ipv4_address: 172.28.127.2
+    volumes:
+      - server-data:/var/
+  db:
+    image: postgres
+    container_name: todo_db
+    restart: always
+    volumes:
+      - ./NerdCasheBE/database/migrations/sql/sNerdCasheBE/database/migrations/sql/1_nerd-cashe-dbcreation.sql:/docker-entrypoint-initdb.d/schema.sql
+      - pg-data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DATABASE)
+    ports:
+      - "5432:5432"
+    networks:
+      nerd-cashe-network:
+        ipv4_address: 172.28.127.1
 
 volumes:
   app-data:
