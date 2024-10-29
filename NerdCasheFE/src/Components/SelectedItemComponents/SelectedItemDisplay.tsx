@@ -33,7 +33,7 @@ export const SelectedGameCard: FunctionComponent<ISelectedGameCard> = ({
     if (contentType == ItemType.GAMES)
       return (currentSelectedItem as IVideogame).companies;
     if (contentType == ItemType.MOVIES)
-      return [(currentSelectedItem as IMovie).director];
+      return (currentSelectedItem as IMovie).directors;
     if (contentType == ItemType.BOOKS)
       return (currentSelectedItem as IBook).authors;
     return ["No contributers given"];
@@ -49,8 +49,9 @@ export const SelectedGameCard: FunctionComponent<ISelectedGameCard> = ({
       return (currentSelectedItem as IMovie).cast;
     return [];
   }
-  function getExtraContent(contentType: ItemType): JSX.Element {
-    const content: JSX.Element = (
+  function getExtraContent(contentType: ItemType): JSX.Element[] {
+    const content: JSX.Element[] = [];
+    content.push(
       <div>
         <h3 className={SelectedItemCardStyles.header}>Rating</h3>
         <h2 className={SelectedItemCardStyles.container}>
@@ -58,6 +59,34 @@ export const SelectedGameCard: FunctionComponent<ISelectedGameCard> = ({
         </h2>
       </div>
     );
+    if (contentType === ItemType.MOVIES) {
+      content.push(
+        <div>
+          <h3 className={SelectedItemCardStyles.header}>Runtime</h3>
+          <h2 className={SelectedItemCardStyles.container}>
+            {(currentSelectedItem as IMovie).runtime + "m"}
+          </h2>
+        </div>
+      );
+    }
+    if (contentType === ItemType.BOOKS) {
+      content.push(
+        <div>
+          <h3 className={SelectedItemCardStyles.header}>Avg Pages</h3>
+          <h2 className={SelectedItemCardStyles.container}>
+            {(currentSelectedItem as IBook).numPages}
+          </h2>
+        </div>
+      );
+      content.push(
+        <div>
+          <h3 className={SelectedItemCardStyles.header}>Editions</h3>
+          <h2 className={SelectedItemCardStyles.container}>
+            {(currentSelectedItem as IBook).numEditions}
+          </h2>
+        </div>
+      );
+    }
     return content;
   }
   function getFormattedDate(): React.ReactNode {
@@ -123,18 +152,20 @@ export const SelectedGameCard: FunctionComponent<ISelectedGameCard> = ({
                 contributor={getContributor(type)}
               ></SelectedItemHeader>
             </div>
-            <div>
-              <h3 className={SelectedItemCardStyles.header}>
-                {getContentType(type)}
-              </h3>
+            {type !== ItemType.BOOKS && (
+              <div>
+                <h3 className={SelectedItemCardStyles.header}>
+                  {getContentType(type)}
+                </h3>
 
-              <SelectedItemHeader
-                contributor={getContentList(type)}
-              ></SelectedItemHeader>
-            </div>
-            <div className={SelectedItemCardStyles.bonusInfo}>
-              {getExtraContent(type)}
-            </div>
+                <SelectedItemHeader
+                  contributor={getContentList(type)}
+                ></SelectedItemHeader>
+              </div>
+            )}
+            {getExtraContent(type).map((item) => {
+              return item;
+            })}
             <div>
               <h3 className={SelectedItemCardStyles.header}>Release date</h3>
               <h2

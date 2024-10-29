@@ -13,6 +13,7 @@ import { VisibilityLabel } from "./VisibilityLabel";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useUserAPI } from "../Hooks/useUserAPI";
+import { useNavigate } from "react-router-dom";
 interface IFormProps {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -32,7 +33,7 @@ export const SignInForm: FunctionComponent<IFormProps> = ({
   const [submitionError, setSubmitionError] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const { results, putUser, getUser } = useUserAPI();
-
+  const navigate = useNavigate();
   function closeModal() {
     setIsModalOpen(!isModalOpen);
   }
@@ -41,12 +42,15 @@ export const SignInForm: FunctionComponent<IFormProps> = ({
   ) {
     event.preventDefault();
     if (isSignInForm == true) {
-      const isSuccessful = await getUser(username, password);
-      if (isSuccessful == true) {
+      const token = await getUser(username, password);
+      console.log(token);
+      if (token !== null) {
         dispatch({
           type: "SET_USER_CREDENTIALS",
           user: username,
+          token: token,
         });
+        navigate("/About");
         closeModal();
       } else {
         setSubmitionError("Please enter a different username");
@@ -70,12 +74,14 @@ export const SignInForm: FunctionComponent<IFormProps> = ({
         setSubmitionError("The passwords you entered do not match");
         return;
       } else {
-        const isSuccessful = await putUser(username, password);
-        if (isSuccessful == true) {
+        const token = await putUser(username, password);
+        if (token !== null) {
           dispatch({
             type: "SET_USER_CREDENTIALS",
             user: username,
+            token: token,
           });
+          navigate("/About");
           closeModal();
         } else {
           setSubmitionError("Please enter a valid username and password");
@@ -119,111 +125,143 @@ export const SignInForm: FunctionComponent<IFormProps> = ({
       open={isModalOpen}
       handleClose={closeModal}
       title={isSignInForm ? "Sign In" : "Sign Up"}
-      styles={{ maxWidth: "100vw", maxHeight: "100vh", }}
+      styles={{ maxWidth: "100vw", maxHeight: "100vh" }}
     >
-      <section style={{display: "flex", justifyContent: "center",alignItems: "center", height: "100%"}} onClick={e => {e.stopPropagation(); closeModal()}}>
-      <form noValidate autoComplete="off" onClick={e => {e.stopPropagation(); }} style={{background: "rgba( 117, 101, 101, 0.5 )",
-boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
-backdropFilter: "blur( 20px )",
-borderRadius: "5px",padding: "1rem",width: "40%",height: "fit-content"}}>
-  <h1 style={{color: "white", fontSize: "2rem", width: "100%",textAlign: "center"}}>{isSignInForm ? "Sign In" : "Sign Up"}</h1>
-        <TextFeild
-          label="Username"
-          helperText="please enter your username"
-          fullWidth
-          variant="standard"
-          inputProps={{ maxLength: 20 }}
-          sx={Styles.field}
-          value={username}
-          onChange={handleUsernameChange}
-        />
-        <TextFeild
-          label="Password"
-          helperText={
-            <VisibilityLabel
-              labelText="please enter your password"
-              isVisible={isVisible}
-              setIsVisible={setIsVisible}
-            ></VisibilityLabel>
-          }
-          fullWidth
-          type={isVisible ? "text " : "password"}
-          variant="standard"
-          inputProps={{ maxLength: 20 }}
-          sx={Styles.field}
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        {!isSignInForm ? (
+      <section
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+          closeModal();
+        }}
+      >
+        <form
+          noValidate
+          autoComplete="off"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          style={{
+            background: "rgba( 117, 101, 101, 0.5 )",
+            boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+            backdropFilter: "blur( 20px )",
+            borderRadius: "5px",
+            padding: "1rem",
+            width: "40%",
+            height: "fit-content",
+          }}
+        >
+          <h1
+            style={{
+              color: "white",
+              fontSize: "2rem",
+              width: "100%",
+              textAlign: "center",
+            }}
+          >
+            {isSignInForm ? "Sign In" : "Sign Up"}
+          </h1>
+          <TextFeild
+            label="Username"
+            helperText="please enter your username"
+            fullWidth
+            variant="standard"
+            inputProps={{ maxLength: 20 }}
+            sx={Styles.field}
+            value={username}
+            onChange={handleUsernameChange}
+          />
+          <TextFeild
+            label="Password"
+            helperText={
+              <VisibilityLabel
+                labelText="please enter your password"
+                isVisible={isVisible}
+                setIsVisible={setIsVisible}
+              ></VisibilityLabel>
+            }
+            fullWidth
+            type={isVisible ? "text " : "password"}
+            variant="standard"
+            inputProps={{ maxLength: 20 }}
+            sx={Styles.field}
+            value={password}
+            onChange={handlePasswordChange}
+          />
+          {!isSignInForm ? (
+            <div
+              style={{
+                width: "100%",
+                position: "relative",
+                height: "fit-content",
+              }}
+            >
+              <TextFeild
+                label="Confirm Password"
+                helperText={
+                  <VisibilityLabel
+                    labelText="please re-enter your password"
+                    isVisible={isVisible}
+                    setIsVisible={setIsVisible}
+                  ></VisibilityLabel>
+                }
+                fullWidth
+                type={isVisible ? "text " : "password"}
+                variant="standard"
+                inputProps={{ maxLength: 20 }}
+                sx={Styles.field}
+                value={passwordConfirm}
+                onChange={handlePasswordConfirmChange}
+              />
+            </div>
+          ) : (
+            ""
+          )}
           <div
             style={{
               width: "100%",
-              position: "relative",
-              height: "fit-content",
+              display: "flex",
+              justifyContent: "center",
+              marginTop: ".5rem",
             }}
           >
-            <TextFeild
-              label="Confirm Password"
-              helperText={
-                <VisibilityLabel
-                  labelText="please re-enter your password"
-                  isVisible={isVisible}
-                  setIsVisible={setIsVisible}
-                ></VisibilityLabel>
-              }
-              fullWidth
-              type={isVisible ? "text " : "password"}
-              variant="standard"
-              inputProps={{ maxLength: 20 }}
-              sx={Styles.field}
-              value={passwordConfirm}
-              onChange={handlePasswordConfirmChange}
-            />
+            <p style={{ color: "red", fontSize: "15px", fontWeight: "bold" }}>
+              {submitionError}
+            </p>
           </div>
-        ) : (
-          ""
-        )}
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            marginTop: ".5rem",
-          }}
-        >
-          <p style={{ color: "red", fontSize: "15px", fontWeight: "bold" }}>
-            {submitionError}
-          </p>
-        </div>
-        <div
-          style={{
-            marginTop: "1rem",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Button
-            type="button"
-            color="primary"
-            variant="contained"
-            sx={{ marginRight: "1rem" }}
-            onClick={() => {
-              setIsSignInForm(!isSignInForm);
+          <div
+            style={{
+              marginTop: "1rem",
+              display: "flex",
+              justifyContent: "center",
             }}
           >
-            {isSignInForm ? "Sign Up" : "Back"}
-          </Button>
-          <Button
-            type="submit"
-            color="primary"
-            variant="contained"
-            disabled={isSubmitDisabled}
-            onClick={HandleSubmit}
-          >
-            Submit
-          </Button>
-        </div>
-      </form>
+            <Button
+              type="button"
+              color="primary"
+              variant="contained"
+              sx={{ marginRight: "1rem" }}
+              onClick={() => {
+                setIsSignInForm(!isSignInForm);
+              }}
+            >
+              {isSignInForm ? "Sign Up" : "Back"}
+            </Button>
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              disabled={isSubmitDisabled}
+              onClick={HandleSubmit}
+            >
+              Submit
+            </Button>
+          </div>
+        </form>
       </section>
     </CustomModal>
   );

@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS nerd_cashe_user (
 id serial PRIMARY KEY,
 username varchar(35),
 password char(60),
+refresh_token text,
 CONSTRAINT username_unique UNIQUE (username)
 );
 
@@ -13,8 +14,10 @@ rating numeric(2),
 release_date date,
 image_url varchar(75),
 storyline varchar(500),
-page_count numeric(4)
+page_count numeric(4),
+edition_count integer
 );
+
 CREATE TABLE IF NOT EXISTS user_book (
 book_id integer REFERENCES book (id),
 user_id integer REFERENCES nerd_cashe_user (id),
@@ -29,18 +32,6 @@ CREATE TABLE IF NOT EXISTS book_author (
 book_id integer REFERENCES book (id),
 author_id integer REFERENCES author (id),
 PRIMARY KEY (book_id,author_id)
-);
-
-
-CREATE TABLE IF NOT EXISTS bookPublisher (
-id serial PRIMARY KEY,
-name varchar(50)
-);
-
-CREATE TABLE IF NOT EXISTS book_bookPublisher (
-book_id integer REFERENCES book (id),
-publister_id integer REFERENCES bookPublisher (id),
-PRIMARY KEY (book_id,publister_id)
 );
 
 CREATE TABLE IF NOT EXISTS movie (

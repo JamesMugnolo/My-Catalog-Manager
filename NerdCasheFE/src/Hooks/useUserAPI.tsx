@@ -1,32 +1,47 @@
 import axios from "axios";
 import { useState } from "react";
-
+import { useDispatch } from "react-redux";
+import useAxiosPrivate from "./useAxiosPrivate";
+export const axiosPrivate = axios.create({
+  baseURL: `${process.env.REACT_APP_BASE_URL}api/users/`,
+  headers: { "Content-Type": "application/json" },
+  withCredentials: true,
+});
 export const useUserAPI = () => {
   const [response, setResponse] = useState<string | null>(null);
   const [error, setError] = useState("");
   const results = { response, error };
-
+  const dispatch = useDispatch();
   const url = `${process.env.REACT_APP_BASE_URL}api/users/`;
+
+  const axiosObj = axios.create({
+    baseURL: `${process.env.REACT_APP_BASE_URL}api/users/`,
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true,
+  }); // create an axios instance with no interceptors
+
+  const axiosPrivate = useAxiosPrivate(axiosObj); //add interceptors
+
   function resetStates() {
     setError("");
     setResponse(null);
   }
   const putUser = async (username: string, password: string) => {
     resetStates();
-    return await axios
+    return await axiosPrivate
       .put(url, {
         username: username,
         password: password,
       })
-      .then(() => {
-        return true;
+      .then((res) => {
+        return res.data.accessToken;
       })
       .catch((err) => {
-        return false;
+        return null;
       });
   };
   const getUser = async (username: string, password: string) => {
-    return await axios
+    return await axiosPrivate
       .get(url, {
         params: {
           username: username,
@@ -34,11 +49,19 @@ export const useUserAPI = () => {
         },
       })
       .then((res) => {
-        return true;
+        return res.data.accessToken;
       })
       .catch((err) => {
-        return false;
+        return null;
       });
   };
-  return { results, putUser, getUser };
+  const getRefreshToken = async () => {
+    const response = await axios.get(url + "refresh", {
+      withCredentials: true,
+    });
+  };
+  const logout = async () => {
+    await axiosPrivate.get(url + "logout");
+  };
+  return { results, logout, putUser, getUser };
 };

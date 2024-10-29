@@ -68,10 +68,7 @@ export const ItemCard: FunctionComponent<IItemCard> = ({
         }`}
         onClick={(event) => {
           event.stopPropagation();
-          dispatch({
-            type: "UPDATE_CURRENTLY_SELECTED_ITEM",
-            selectedItem: item,
-          });
+          HandleButtonClick();
         }}
       >
         {selectionType == CardSelectionType.UNSELECTABLE ? (
@@ -84,15 +81,6 @@ export const ItemCard: FunctionComponent<IItemCard> = ({
             }
         `}
           >
-            <button
-              className={ItemCardStyles.infoButton}
-              onClick={(event) => {
-                event.stopPropagation();
-                openInfoModal();
-              }}
-            >
-              <InfoOutlinedIcon sx={{ fontSize: "2.5rem" }}></InfoOutlinedIcon>
-            </button>
             <button
               className={`${ItemCardStyles.displayOverlayButton} ${
                 isActiveSelection
@@ -107,8 +95,10 @@ export const ItemCard: FunctionComponent<IItemCard> = ({
               <CheckIcon
                 sx={{
                   textAlign: "center",
-                  color: "white",
+                  color: "rgba(255,255,255,.75)",
                   fontWeight: "bolder",
+                  height: "80%",
+                  width: "80%",
                 }}
                 className={ItemCardStyles.CheckIcon}
               />
@@ -122,14 +112,32 @@ export const ItemCard: FunctionComponent<IItemCard> = ({
             width: "30%",
             height: "25%",
             position: "absolute",
+            backdropFilter: "blur(10px)",
             top: -1,
             left: -1,
             margin: 0,
-            zIndex: 1,
+            zIndex: 5,
             clipPath: "polygon(0 0, 100% 0, 0 100%)",
             display: "block",
           }}
-        ></div>
+        >
+          {" "}
+          <button
+            className={ItemCardStyles.infoButton}
+            onClick={(event) => {
+              event.stopPropagation();
+              dispatch({
+                type: "UPDATE_CURRENTLY_SELECTED_ITEM",
+                selectedItem: item,
+              });
+              openInfoModal();
+            }}
+          >
+            <InfoOutlinedIcon
+              sx={{ width: "fit-content", height: "fit-content" }}
+            ></InfoOutlinedIcon>
+          </button>
+        </div>
         <img src={item.image_url} className={ItemCardStyles.displayImage}></img>
       </div>
     </>

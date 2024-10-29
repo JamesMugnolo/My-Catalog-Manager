@@ -32,6 +32,7 @@ export const ColectionSelector: FunctionComponent<IColectionSelector> = ({
         label={"Collections"}
         selectionItems={["Yours", "External"]}
         initialValue={isUserCollectionActive ? "Yours" : "External"}
+        isUserCollectionActive={isUserCollectionActive}
         OnClick={handleMobileButtonClick}
       ></ButtonMenu>
     </>

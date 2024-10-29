@@ -4,6 +4,7 @@ import { FunctionComponent, useState } from "react";
 import { itemType } from "../Stores/reducers/ItemInterfaces";
 import { useSelector } from "react-redux";
 import { appState } from "../Stores/appStore";
+import useAxiosPrivate from "./useAxiosPrivate";
 
 export const useItemAPI = (itemTypeEnum: ItemType) => {
   const [response, setResponse] = useState<number[] | itemType[] | null>(null);
@@ -11,7 +12,13 @@ export const useItemAPI = (itemTypeEnum: ItemType) => {
   const results = { response, error };
 
   const url = `${process.env.REACT_APP_BASE_URL}api/${itemTypeEnum}`;
+  const axiosObj = axios.create({
+    baseURL: process.env.REACT_APP_BASE_URL,
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true,
+  }); // create an axios instance with no interceptors
 
+  const axiosPrivate = useAxiosPrivate(axiosObj); //add interceptors
   function resetStates() {
     setError("");
     setResponse(null);
@@ -23,7 +30,7 @@ export const useItemAPI = (itemTypeEnum: ItemType) => {
 
   const postItems = async (selectedItems: itemType[]) => {
     resetStates();
-    return await axios
+    return await axiosPrivate
       .post(`${url}/internal/`, {
         username: username,
         items: selectedItems,
@@ -33,7 +40,7 @@ export const useItemAPI = (itemTypeEnum: ItemType) => {
       });
   };
   const fetchUserItems = async () => {
-    return await axios
+    return await axiosPrivate
       .get(`${url}/internal/`, {
         params: {
           username: username,
@@ -44,7 +51,7 @@ export const useItemAPI = (itemTypeEnum: ItemType) => {
       });
   };
   const deleteUserItems = async (selectedItems: itemType[]) => {
-    return await axios
+    return await axiosPrivate
       .delete(`${url}/internal/`, {
         data: {
           username: username,
@@ -55,5 +62,18 @@ export const useItemAPI = (itemTypeEnum: ItemType) => {
         return res.data.deletedUserItemIds;
       });
   };
-  return { results, postItems, fetchUserItems, deleteUserItems };
+  async function getItems(searchValue: string) {
+    const Items = await axiosPrivate
+      .get(
+        `${process.env.REACT_APP_BASE_URL}api/${itemTypeEnum}/external/${searchValue}`
+      )
+      .then(function (response) {
+        return response.data;
+      })
+      .catch((err) => {
+        return [];
+      });
+    return Items;
+  } //SetItemFormatting(response.data);
+  return { results, postItems, getItems, fetchUserItems, deleteUserItems };
 };

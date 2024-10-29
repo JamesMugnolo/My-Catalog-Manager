@@ -9,9 +9,7 @@ interface IDynamicStyles {
 }
 interface IModalProps {
   open: boolean;
-  handleClose:
-    | ((event: unknown) => void)
-    | undefined;
+  handleClose: ((event: unknown) => void) | undefined;
   title: string;
   children: any;
   styles: IDynamicStyles;
@@ -29,13 +27,15 @@ export const CustomModal: FunctionComponent<IModalProps> = ({
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
-      style={{ width: "100%", height: "100%", background: "rgba( 0, 0, 0, 0.3 )",
+      style={{
+        width: "100%",
+        height: "100%",
+        background: "rgba( 0, 0, 0, 0.3 )",
         boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
-        backdropFilter: "blur( 28px )"}}
+        backdropFilter: "blur( 28px )",
+      }}
     >
-     {children}
-
-    
+      {children}
     </Modal>
   );
 };

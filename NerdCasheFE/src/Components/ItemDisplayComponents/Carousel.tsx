@@ -126,7 +126,7 @@ export const Carousel: FunctionComponent<ICarousel> = ({
           </ul>
         </div>
         <div className={CarouselStyles.carouselSlider}>
-          {isUserCollectionActive && !selectedItemsIsEmpty() ? (
+          {isUserCollectionActive ? (
             <button
               className={`${CarouselStyles.carouselSliderListButton} ${CarouselStyles.removeButton}`}
               style={{}}
@@ -144,12 +144,12 @@ export const Carousel: FunctionComponent<ICarousel> = ({
           ) : (
             ""
           )}
-          {!isUserCollectionActive && !selectedItemsIsEmpty() ? (
+          {!isUserCollectionActive ? (
             <button
               className={`${CarouselStyles.carouselSliderListButton} ${CarouselStyles.addButton}`}
               style={{}}
               disabled={
-                !isUserCollectionActive && isSelectionButtondisabled
+                !isUserCollectionActive && getSelectedItems().length === 0
                   ? true
                   : false
               }

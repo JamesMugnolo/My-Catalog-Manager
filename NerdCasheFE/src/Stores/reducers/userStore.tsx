@@ -1,13 +1,12 @@
 import { Reducer } from "react";
 
-interface IUser {
-  username: string;
-}
 interface IUserState {
   user: string | null;
+  accessToken: string | null;
 }
 const InitUserState: IUserState = {
   user: null,
+  accessToken: null,
 };
 
 export const userReducer: Reducer<IUserState | undefined, userActions> = (
@@ -22,12 +21,19 @@ export const userReducer: Reducer<IUserState | undefined, userActions> = (
       return {
         ...state,
         user: action.user,
+        accessToken: action.token,
       };
 
     case "REMOVE_USER": {
       return {
-        ...state,
         user: null,
+        accessToken: null,
+      };
+    }
+    case "SET_ACCESS_TOKEN": {
+      return {
+        ...state,
+        accessToken: action.token,
       };
     }
     default:
@@ -37,9 +43,17 @@ export const userReducer: Reducer<IUserState | undefined, userActions> = (
 interface set_user_credentials_action {
   type: "SET_USER_CREDENTIALS";
   user: string;
+  token: string;
 }
 interface remove_user_action {
   type: "REMOVE_USER";
 }
+interface set_token_action {
+  type: "SET_ACCESS_TOKEN";
+  token: string;
+}
 
-type userActions = set_user_credentials_action | remove_user_action;
+type userActions =
+  | set_user_credentials_action
+  | remove_user_action
+  | set_token_action;

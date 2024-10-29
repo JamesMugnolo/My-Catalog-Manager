@@ -1,6 +1,5 @@
 const express = require("express");
 let router = express.Router();
-let cors = require("cors");
 require("dotenv").config();
 const axios = require("axios");
 
@@ -19,10 +18,9 @@ const {
 } = require("../../database/Movies/movie_commands.js");
 const { getUserID } = require("../../database/Users/user_db_commands.js");
 
-var corsOptions = {
-  origin: "*",
-  optionsSuccessStatus: 200,
-};
+const cors = require("cors");
+const { credentials, corsOptions } = require("../middleware/verifyOrigin.js");
+router.use(credentials);
 router.use(cors(corsOptions));
 const bodyParser = require("body-parser");
 router.use(bodyParser.json());
@@ -69,27 +67,29 @@ router.get("/external/:title", async function (req, res) {
   }
 
   await Promise.all(TMDBEndpoints1).then((response) => {
-    let director = "";
+    let directors = [];
     let tempDirectors = [];
     let cast = [];
     let movieData = {};
 
     for (const item of response) {
       if (item.data.title == undefined) {
-        if (item.data.crew.length == 0) director = "";
-
         tempDirectors = item.data.crew.filter((member) => {
           return member.job === "Director";
         });
 
-        if (tempDirectors.length == 0) director = "";
-        else director = tempDirectors[0].name;
+        directors = tempDirectors.reduce(
+          (tempDirectors, currentMember) => [
+            ...tempDirectors,
+            currentMember.name,
+          ],
+          []
+        );
 
         cast = item.data.cast
           .filter(
             ({ known_for_department }) => known_for_department === "Acting"
           ) //filter the array to get just  the acting department
-          .slice(0, 10) // slice the array so its only the first 10 actors
           .reduce(
             (castArray, currentMember) => [...castArray, currentMember.name],
             []
@@ -98,28 +98,28 @@ router.get("/external/:title", async function (req, res) {
         movieData = item.data;
       }
       if (
-        (director != "") &
+        (directors != []) &
         (cast.length != 0) &
         (Object.keys(movieData).length != 0) &
         (movieData.poster_path != null)
       ) {
-        formattedItems.push(formatItemData(movieData, director, cast));
-        director = "";
+        formattedItems.push(formatItemData(movieData, directors, cast));
+        directors = "";
         cast = [];
         movieData = {};
       }
     }
   });
-
+  console.log(formattedItems);
   res.json(formattedItems);
 });
-function formatItemData(item, director, cast) {
+function formatItemData(item, directors, cast) {
   const id = item.id;
   const name = item.original_title;
   const rating = Math.round(item.vote_average * 10); //vote_average is given in decimal form
   const release_date = new Date(item.release_date);
   const image_url = `https://image.tmdb.org/t/p/original${item.poster_path}`;
-  const storyline = item.overview;
+  const description = item.overview;
   const runtime = item.runtime;
   formattedItem = {
     id,
@@ -127,8 +127,8 @@ function formatItemData(item, director, cast) {
     rating,
     release_date,
     image_url,
-    storyline,
-    director,
+    description,
+    directors,
     cast,
   };
 
@@ -189,13 +189,13 @@ router.post("/internal", async function (req, res) {
     return res.status(403);
   }
   const userID = result.rows[0].id;
-
+  console.log(req.body.items);
   for (movie of req.body.items) {
     queryResults = await insertMovie(movie);
     const movieID = queryResults.id;
 
     if (queryResults.wasDuplicate === false) {
-      await insertDirectorList(movie.director, movieID, queryResults);
+      await insertDirectorList(movie.directors, movieID, queryResults);
       await insertCastList(movie.cast, movieID, queryResults);
     }
 
@@ -210,13 +210,13 @@ router.post("/internal", async function (req, res) {
   });
 });
 async function insertDirectorList(directors, movieID, queryResults) {
-  for (director of directors) {
+  for (const director of directors) {
     queryResults = await insertDirector(director);
     await insertMovieDirector(queryResults.id, movieID);
   }
 }
 async function insertCastList(cast, movieID, queryResults) {
-  for (member of cast) {
+  for (const member of cast) {
     queryResults = await insertCastMember(member);
     await insertMovieCastMember(queryResults.id, movieID);
   }

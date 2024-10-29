@@ -25,8 +25,6 @@ export const CustomLink: FunctionComponent<ILinkProps> = ({
   const dispatch = useDispatch();
   const { fetchUserItems } = useItemAPI(linkType);
 
-  //checks if the pathnames match
-
   const HandleClick = async () => {
     if (isActive != true) {
       dispatch({ type: "CHANGE_ITEM_COLLECTON" });

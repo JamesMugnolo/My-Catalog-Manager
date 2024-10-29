@@ -11,7 +11,7 @@ const poolConfig = {
 };
 
 const pool = new Pool(poolConfig);
-console.log(poolConfig)
+console.log(poolConfig);
 const db = {
   runMigrations: async function () {
     const client = await pool.connect();

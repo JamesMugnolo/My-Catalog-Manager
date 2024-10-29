@@ -36,7 +36,7 @@
 .displayOverlay:hover {
   background-color: rgba(2, 2, 21, 0.5);
   transition: background-color 0.3s ease-in-out;
-  border: 2px solid #1976d2;
+  /* border: 2px solid #1976d2; */
 }
 .infoButton > .displayOverlay:hover {
   visibility: hidden;
@@ -87,30 +87,38 @@
   margin: 0;
   padding: 0;
   outline-offset: 3px;
+  background-color: rgba(8, 62, 115, 0.512);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 .displayOverlayButton:hover {
   /* transform: scale(1.1); */
   transition: all 0.22s ease-in-out;
   color: white;
-  background-color: rgba(8, 62, 115, 0.512);
+  background: rgba(25, 116, 210, 0.7);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 .displayOverlayActive {
   background-color: rgba(0, 3, 34, 0.75);
-  border: 1.5px solid #1976d2;
+  /* border: 1.5px solid #1976d2; */
 }
 .displayCardActive {
   transform: scale(1);
 }
 .infoButton {
   color: #1976d2;
+  height: 60%;
+  width: 60%;
+  display: flex;
   padding: 0.25rem;
-  font-size: large;
+  line-height: normal;
   z-index: 3;
-  
 }
 .displayOverlayButtonActive {
-  background-color: rgba(255, 255, 255, 0.3);
-  background-color: #1976d2;
+  /* background-color: rgba(255, 255, 255, 0.3); */
+  /* background-color: #1976d2; */
   top: 3%;
   left: 97%;
   position: absolute;
@@ -124,8 +132,10 @@
   /* margin: .5rem; */
   /* padding: .5rem; */
   /* outline-offset: 0px; */
-  box-shadow: none;
-  box-shadow: 0 0 0 1px #1976d2;
+  background: rgba(25, 116, 210, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .displayOverlayActive .displayOverlayButton {
@@ -135,6 +145,10 @@
   background-color: #1976d2;
   transition: all 0.22s ease-in-out;
   box-shadow: 0 0 0 1px #1976d2;
+  background: rgba(25, 116, 210, 0.7);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 @media (min-width: 500px) {
   .imageGallery {
@@ -143,4 +157,12 @@
   .carouselTitleContainer h1 {
     font-size: 26px;
   }
+}
+.infoButton {
+  color: #1976d2;
+  height: fit-content;
+  display: flex;
+  padding: 0.25rem;
+  line-height: normal;
+  z-index: 3;
 }

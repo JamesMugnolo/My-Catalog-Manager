@@ -91,7 +91,7 @@ exports.insertMovie = async function (movie) {
         Number(movie.rating),
         movie.release_date,
         movie.image_url,
-        movie.storyline,
+        movie.description,
         movie.runtime,
       ]
     )

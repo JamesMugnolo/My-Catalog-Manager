@@ -4,12 +4,19 @@ import { ItemType } from "../../Pages/ItemDisplay";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import NavContentStyles from "./NavContent.module.css";
+import { useDispatch } from "react-redux";
+import { useUserAPI } from "../../Hooks/useUserAPI";
+import useLogout from "../../Hooks/useLogout";
 interface INavbarContent {
   isMobileView: boolean;
 }
 export const NavbarContent: FunctionComponent<INavbarContent> = ({
   isMobileView,
 }) => {
+  const userLogout = useLogout();
+  async function HandleLogout() {
+    await userLogout();
+  }
   return (
     <ul
       className={`${NavContentStyles.NavContentList} ${
@@ -39,11 +46,12 @@ export const NavbarContent: FunctionComponent<INavbarContent> = ({
         color="error"
         variant="contained"
         className={NavContentStyles.signoutButton}
+        onClick={(e) => HandleLogout()}
       >
         <Link
-          to={"/SignOut"}
+          to={"/"}
           className={NavContentStyles.signoutButtonText}
-          style={{ fontSize: "22px", fontWeight: "900" }}
+          style={{ fontSize: "22px", fontWeight: "bold" }}
         >
           Sign Out
         </Link>

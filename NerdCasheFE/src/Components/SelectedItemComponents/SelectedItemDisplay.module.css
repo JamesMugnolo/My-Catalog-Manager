@@ -36,6 +36,7 @@
   padding: 0.5rem;
   border-radius: 5px;
   background-color: #333;
+  width: fit-content;
 }
 .date {
   color: #fff;
@@ -266,6 +267,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  color: white;
 }
 @media (max-width: 768px) {
   .itemImage {

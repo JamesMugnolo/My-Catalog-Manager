@@ -7,6 +7,7 @@ interface IButtonMenu {
   selectionItems: string[];
   initialValue: string;
   OnClick: (collectionType: string) => void;
+  isUserCollectionActive: boolean;
 }
 
 export const ButtonMenu: FunctionComponent<IButtonMenu> = ({
@@ -14,11 +15,19 @@ export const ButtonMenu: FunctionComponent<IButtonMenu> = ({
   selectionItems,
   initialValue,
   OnClick,
+  isUserCollectionActive,
 }) => {
   const [selectedItem, setSelectedItem] = useState(initialValue);
   const [isMenuActive, setIsMenuActive] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
   useClickOut(divRef, [setIsMenuActive]);
+  useEffect(() => {
+    if (isUserCollectionActive) {
+      setSelectedItem(selectionItems[0]);
+    } else {
+      setSelectedItem(selectionItems[1]);
+    }
+  }, [isUserCollectionActive]);
 
   const handleChange = (item: string) => {
     setSelectedItem(item);

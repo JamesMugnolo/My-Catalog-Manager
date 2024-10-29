@@ -58,7 +58,6 @@ export const useItemSelectors = (itemTypeEnum: ItemType) => {
     return selectedItems;
   };
   const getItemKeys = () => {
-
     if (itemTypeEnum == ItemType.BOOKS) {
       const Item = {} as IBook;
       return Object.keys(Item as IBook);

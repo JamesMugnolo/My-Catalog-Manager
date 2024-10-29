@@ -4,7 +4,7 @@ export interface IVideogame extends IItems {
 }
 export interface IMovie extends IItems {
   runtime: number;
-  director: string;
+  directors: string[];
   cast: string[];
 }
 export interface IBook extends IItems {
@@ -51,7 +51,10 @@ const MovieFilterKeys = [
   { value: "cast member", allowExternalFilter: true },
 ];
 
-export const ItemGameFilterKeys = [...ItemFilterKeys,...GameFilterKeys] as IFilterTerms[];
+export const ItemGameFilterKeys = [
+  ...ItemFilterKeys,
+  ...GameFilterKeys,
+] as IFilterTerms[];
 export const ItemMovieFilterKeys = [
   ...ItemFilterKeys,
   ...MovieFilterKeys,

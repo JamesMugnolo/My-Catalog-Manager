@@ -34,3 +34,22 @@ exports.insertUser = async function (username, hashedPwd) {
   console.log("about to return: ", queryResults.successful);
   return queryResults.successful;
 };
+exports.setRefreshToken = async function (username, token) {
+  await pool.query(
+    "UPDATE nerd_cashe_user SET refresh_token = $1 WHERE username = $2 ",
+    [token, username]
+  );
+};
+exports.findByToken = async function (token) {
+  const res = await pool.query(
+    "SELECT * FROM nerd_cashe_user WHERE refresh_token = $1 ",
+    [token]
+  );
+  return res;
+};
+exports.removeRefreshToken = async function (username) {
+  await pool.query(
+    "UPDATE nerd_cashe_user SET refresh_token = NULL WHERE username = $1 ",
+    [username]
+  );
+};

@@ -63,44 +63,7 @@ export const DropdownMenu: FunctionComponent<IDropdownMenu> = ({
     const pages = [];
 
     for (const arr of resultArr) {
-      pages.push(
-        <>
-          <div ref={pageRef} style={{ width: "100%" }}>
-            {arr[0] === menuItems[0] && (
-              <motion.div
-                layout
-                className={` ${isFullSize ? DropDownStyles.textContainer : ""}`}
-              >
-                <motion.h2 layout="position" className={DropDownStyles.text}>
-                  {arr[0]}
-                </motion.h2>
-              </motion.div>
-            )}
-
-            {isFullSize &&
-              arr.map((cont: string) => {
-                if (menuItems[0] != cont) {
-                  return (
-                    <>
-                      <motion.div
-                        className={DropDownStyles.textSpacer}
-                      ></motion.div>
-                      <motion.div
-                        layout
-                        key={cont}
-                        className={DropDownStyles.textContainer}
-                      >
-                        <motion.h2 layout className={DropDownStyles.text}>
-                          {cont}
-                        </motion.h2>
-                      </motion.div>
-                    </>
-                  );
-                }
-              })}
-          </div>
-        </>
-      );
+      pages.push(<></>);
     }
     // setPages(pages);
     return pages;
@@ -130,7 +93,38 @@ export const DropdownMenu: FunctionComponent<IDropdownMenu> = ({
           height: pageHeight,
         }}
       >
-        {getPages()}
+        <div ref={pageRef} style={{ width: "100%" }}>
+          <motion.div
+            layout
+            className={` ${isFullSize ? DropDownStyles.textContainer : ""}`}
+          >
+            <motion.h2 layout="position" className={DropDownStyles.text}>
+              {menuItems[0]}
+            </motion.h2>
+          </motion.div>
+
+          {isFullSize &&
+            menuItems.map((cont: string) => {
+              if (menuItems[0] != cont) {
+                return (
+                  <>
+                    <motion.div
+                      className={DropDownStyles.textSpacer}
+                    ></motion.div>
+                    <motion.div
+                      layout
+                      key={cont}
+                      className={DropDownStyles.textContainer}
+                    >
+                      <motion.h2 layout className={DropDownStyles.text}>
+                        {cont}
+                      </motion.h2>
+                    </motion.div>
+                  </>
+                );
+              }
+            })}
+        </div>
       </motion.div>
       {menuItems.length > 1 && (
         <button

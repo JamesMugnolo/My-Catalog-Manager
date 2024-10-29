@@ -71,7 +71,11 @@
 
 .signoutButton {
   transition: transform 0.25s ease-in-out;
-  font-weight: 800;
+  font-weight: lighter;
+}
+.signoutButtonText {
+  transition: transform 0.25s ease-in-out;
+  font-weight: lighter;
 }
 .signoutButton:hover {
   transform: scale(1.07);
