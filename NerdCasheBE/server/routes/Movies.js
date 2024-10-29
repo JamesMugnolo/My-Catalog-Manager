@@ -1,6 +1,5 @@
 const express = require("express");
 let router = express.Router();
-require("dotenv").config();
 const axios = require("axios");
 
 const {
@@ -17,13 +16,6 @@ const {
   getUserMovies,
 } = require("../../database/Movies/movie_commands.js");
 const { getUserID } = require("../../database/Users/user_db_commands.js");
-
-const cors = require("cors");
-const { credentials, corsOptions } = require("../middleware/verifyOrigin.js");
-router.use(credentials);
-router.use(cors(corsOptions));
-const bodyParser = require("body-parser");
-router.use(bodyParser.json());
 
 function getExternalAxiosConfig(collection, key) {
   var url = "";

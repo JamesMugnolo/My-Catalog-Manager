@@ -2,7 +2,6 @@ const express = require("express");
 let router = express.Router();
 const igdbClient = require("../config/igdbConfig");
 
-require("dotenv").config();
 const {
   insertGame,
   insertConsole,
@@ -17,13 +16,6 @@ const {
   deleteGame,
 } = require("../../database/Videogames/videogame_commands.js");
 const { getUserID } = require("../../database/Users/user_db_commands.js");
-const cors = require("cors");
-const { credentials, corsOptions } = require("../middleware/verifyOrigin.js");
-router.use(credentials);
-router.use(cors(corsOptions));
-const bodyParser = require("body-parser");
-router.use(bodyParser.json());
-const verifyJWT = require("../middleware/verifyJWT.js");
 
 router.get("/external/:title", async function (req, res) {
   const client = await igdbClient();
