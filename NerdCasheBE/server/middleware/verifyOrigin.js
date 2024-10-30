@@ -1,5 +1,3 @@
-const { options } = require("../routes/Users");
-
 const allowedOrigins = ["*", "http://localhost:3000"];
 
 const credentials = (req, res, next) => {

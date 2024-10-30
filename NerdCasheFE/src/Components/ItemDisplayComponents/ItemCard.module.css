@@ -38,9 +38,6 @@
   transition: background-color 0.3s ease-in-out;
   /* border: 2px solid #1976d2; */
 }
-.infoButton > .displayOverlay:hover {
-  visibility: hidden;
-}
 .displayOverlay .displayOverlayButton {
   visibility: hidden;
 }
@@ -63,9 +60,7 @@
   height: 85%;
   font-weight: bolder;
 }
-.CheckIcon:hover {
-  color: white;
-}
+
 .displayOverlayButton {
   /* display: flex;
   align-items: center;
@@ -94,7 +89,6 @@
 }
 .displayOverlayButton:hover {
   /* transform: scale(1.1); */
-  transition: all 0.22s ease-in-out;
   color: white;
   background: rgba(25, 116, 210, 0.7);
   backdrop-filter: blur(5px);

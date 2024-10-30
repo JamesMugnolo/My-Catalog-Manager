@@ -8,7 +8,7 @@ CONSTRAINT username_unique UNIQUE (username)
 
 CREATE TABLE IF NOT EXISTS book (
 id serial PRIMARY KEY,
-external_book_id integer,
+external_book_id integer NOT NULL UNIQUE,
 name varchar(50),
 rating numeric(2),
 release_date date,

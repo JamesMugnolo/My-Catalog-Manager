@@ -1,21 +1,11 @@
 const express = require("express");
 let router = express.Router();
-require("dotenv").config();
 const axios = require("axios");
-
-//const { getUserID } = require("../../database/Users/user_db_commands.js");
-const cors = require("cors");
-const { credentials, corsOptions } = require("../middleware/verifyOrigin.js");
-router.use(credentials);
-router.use(cors(corsOptions));
-
-const bodyParser = require("body-parser");
-router.use(bodyParser.json());
 const {
-  getUserBooks,
+  getBookID: getBookID,
+  getUserBooks: getUserBooks,
   getBookAuthors,
   insertBook,
-  getBookID,
   insertAuthor,
   insertBookAuthor,
   insertUserBook,
@@ -68,7 +58,7 @@ router.get("/external/:title", async function (req, res) {
       });
       if (storyline != "") {
         let formattedBook = {
-          id: book.id,
+          id: book.cover_i,
           name:
             book.title +
             (book.subtitle != undefined ? ` ${book.subtitle}` : ""),
@@ -82,7 +72,6 @@ router.get("/external/:title", async function (req, res) {
           authors: book.author_name,
           numEditions: book.edition_count,
           numPages: book.number_of_pages_median,
-          publisher: book.publisher,
         };
         formattedItems.push(formattedBook);
       }
@@ -152,23 +141,23 @@ router.post("/internal", async function (req, res) {
   let queryResults;
   let insertedUserBookIds = [];
 
-  console.log(req.body.username);
+  console.log(req.body);
   const result = await getUserID(req.body.username);
 
   if (result.rowCount == 0) {
     return res.status(403);
   }
   const userID = result.rows[0].id;
-
+  console.log(userID);
   for (book of req.body.items) {
     queryResults = await insertBook(book);
     const bookID = queryResults.id;
-
+    console.log(bookID);
     if (queryResults.wasDuplicate === false) {
       await insertAuthorList(book.authors, bookID, queryResults);
     }
 
-    queryResults = await insertUserBook(userID, bookID);
+    queryResults = await insertUserBook(bookID, userID);
     if (queryResults.wasDuplicate === false) {
       insertedUserBookIds.push(book.id);
     }

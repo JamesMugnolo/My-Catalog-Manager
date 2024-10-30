@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon -L app.js",
+    "dev": "nodemon -L app.js node --trace-warnings",
     "client": "cd .. && cd NerdCasheFE && npm start",
     "start": "concurrently \"npm run dev\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1",

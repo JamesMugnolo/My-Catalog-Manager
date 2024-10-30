@@ -199,7 +199,7 @@
 }
 @media (min-width: 1500px) {
   .imageGallery {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(7, 1fr);
   }
   .carouselTitleContainer h1 {
     font-size: 26px;
@@ -207,6 +207,6 @@
 }
 @media (min-width: 2000px) {
   .imageGallery {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
   }
 }

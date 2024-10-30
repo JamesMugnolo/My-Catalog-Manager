@@ -14,6 +14,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useUserAPI } from "../Hooks/useUserAPI";
 import { useNavigate } from "react-router-dom";
+import SigninStyles from "./signinForm.module.css";
 interface IFormProps {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -145,15 +146,7 @@ export const SignInForm: FunctionComponent<IFormProps> = ({
           onClick={(e) => {
             e.stopPropagation();
           }}
-          style={{
-            background: "rgba( 117, 101, 101, 0.5 )",
-            boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
-            backdropFilter: "blur( 20px )",
-            borderRadius: "5px",
-            padding: "1rem",
-            width: "40%",
-            height: "fit-content",
-          }}
+          className={SigninStyles.form}
         >
           <h1
             style={{
