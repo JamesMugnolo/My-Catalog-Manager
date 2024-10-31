@@ -1,21 +1,16 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent } from "react";
 import SelectedItemCardStyles from "./SelectedItemDisplay.module.css";
 import { DescriptionSection } from "./DescriptionSection";
 import { useSelector } from "react-redux";
 import { appState } from "../../Stores/appStore";
 import { SelectedItemHeader } from "./SelectedItemHeader";
-import { TileSection } from "./TileSection";
-import { ListSection } from "./ListSection";
 import { ItemType } from "../../Pages/ItemDisplay";
 import {
   IBook,
-  IItems,
   IMovie,
   IVideogame,
   itemType,
 } from "../../Stores/reducers/ItemInterfaces";
-import { DropdownMenu } from "../ItemCard/DropdownMenu";
-import { AnimatePresence, motion } from "framer-motion";
 interface ISelectedGameCard {
   type: ItemType;
   closeModal: () => void;
@@ -28,7 +23,6 @@ export const SelectedGameCard: FunctionComponent<ISelectedGameCard> = ({
   const currentSelectedItem = useSelector((state: appState) => {
     return state.items!.currentItemDetails as itemType;
   });
-  const [isDescOverflowing, setIsDescOverflowing] = useState(false);
   function getContributor(contentType: ItemType) {
     if (contentType == ItemType.GAMES)
       return (currentSelectedItem as IVideogame).companies;
@@ -74,7 +68,7 @@ export const SelectedGameCard: FunctionComponent<ISelectedGameCard> = ({
         <div>
           <h3 className={SelectedItemCardStyles.header}>Avg Pages</h3>
           <h2 className={SelectedItemCardStyles.container}>
-            {(currentSelectedItem as IBook).numPages}
+            {(currentSelectedItem as IBook).num_pages}
           </h2>
         </div>
       );
@@ -82,7 +76,7 @@ export const SelectedGameCard: FunctionComponent<ISelectedGameCard> = ({
         <div>
           <h3 className={SelectedItemCardStyles.header}>Editions</h3>
           <h2 className={SelectedItemCardStyles.container}>
-            {(currentSelectedItem as IBook).numEditions}
+            {(currentSelectedItem as IBook).num_editions}
           </h2>
         </div>
       );
@@ -96,10 +90,10 @@ export const SelectedGameCard: FunctionComponent<ISelectedGameCard> = ({
     );
   }
 
-  function getContentType(type: ItemType): React.ReactNode {
+  function getContentType(type: ItemType): string {
     if (type == ItemType.GAMES) return "Platforms";
     if (type == ItemType.MOVIES) return "Actors";
-    if (type == ItemType.BOOKS) return "";
+    return "N/A";
   }
 
   return (
@@ -147,19 +141,16 @@ export const SelectedGameCard: FunctionComponent<ISelectedGameCard> = ({
         >
           <div className={SelectedItemCardStyles.listSection}>
             <div style={{ zIndex: 1 }}>
-              <h3 className={SelectedItemCardStyles.header}>Contributors</h3>
               <SelectedItemHeader
-                contributor={getContributor(type)}
+                title={"Contributors"}
+                items={getContributor(type)}
               ></SelectedItemHeader>
             </div>
             {type !== ItemType.BOOKS && (
               <div>
-                <h3 className={SelectedItemCardStyles.header}>
-                  {getContentType(type)}
-                </h3>
-
                 <SelectedItemHeader
-                  contributor={getContentList(type)}
+                  title={getContentType(type)}
+                  items={getContentList(type)}
                 ></SelectedItemHeader>
               </div>
             )}
@@ -186,30 +177,12 @@ export const SelectedGameCard: FunctionComponent<ISelectedGameCard> = ({
             e.stopPropagation();
           }}
         >
-          {currentSelectedItem.description !== undefined ? (
+          {currentSelectedItem.description !== null ? (
             <div style={{ height: "100%" }}>
               <DescriptionSection
                 description={currentSelectedItem.description}
                 overflowAxis="vertical"
-                setIsDescOverflowing={setIsDescOverflowing}
-              >
-                <div
-                  className={SelectedItemCardStyles.DescriptionContainer}
-                  style={{
-                    width: "100%",
-                    maxHeight:
-                      currentSelectedItem.description != null
-                        ? "100%"
-                        : "fit-content",
-                    fontWeight: "80",
-                  }}
-                >
-                  {currentSelectedItem != null &&
-                  currentSelectedItem.description != null
-                    ? currentSelectedItem.description
-                    : "no description"}
-                </div>
-              </DescriptionSection>
+              ></DescriptionSection>
             </div>
           ) : (
             <div>
@@ -226,62 +199,5 @@ export const SelectedGameCard: FunctionComponent<ISelectedGameCard> = ({
         </div>
       </div>
     </section>
-
-    /* <AnimatePresence mode="wait">
-        <motion.div
-          layout
-          key={`${currentSelectedItem == null}`}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{
-            opacity: 1,
-            scale: 1,
-            transition: { type: "spring", stiffness: 50, duration: ".1" },
-          }}
-          exit={{ opacity: 0, scale: 0, transition: { duration: ".1" } }}
-          className={SelectedItemCardStyles.resultsBar}
-        >
-          <motion.div
-            layout
-            className={`${SelectedItemCardStyles.noSelectionContainer} ${SelectedItemCardStyles.back}`}
-          >
-            <SelectedItemHeader
-              title={
-                currentSelectedItem == null ? "--" : currentSelectedItem.name
-              }
-              contributor={
-                currentSelectedItem == null ? ["--"] : getContributor(type)
-              }
-            ></SelectedItemHeader>
-
-            <TileSection item={currentSelectedItem} type={type}></TileSection>
-            <div className={SelectedItemCardStyles.ListSectionContainer}>
-              {type != ItemType.BOOKS ? (
-                <DescriptionSection overflowAxis="horizontal">
-                  <ListSection list={getContentList(type)}></ListSection>
-                </DescriptionSection>
-              ) : (
-                ""
-              )}
-            </div>
-
-            <DescriptionSection
-              overflowAxis="vertical"
-              setIsDescOverflowing={setIsDescOverflowing}
-            >
-              <div
-                className={SelectedItemCardStyles.DescriptionContainer}
-                style={{
-                  width: "100%",
-                }}
-              >
-                {currentSelectedItem != null &&
-                currentSelectedItem.description != null
-                  ? currentSelectedItem.description
-                  : "no description"}
-              </div>
-            </DescriptionSection>
-          </motion.div>
-        </motion.div>
-      </AnimatePresence> */
   );
 };

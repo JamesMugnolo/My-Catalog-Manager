@@ -102,7 +102,6 @@ router.get("/external/:title", async function (req, res) {
       }
     }
   });
-  console.log(formattedItems);
   res.json(formattedItems);
 });
 function formatItemData(item, directors, cast) {
@@ -130,8 +129,7 @@ function formatItemData(item, directors, cast) {
 router.delete("/internal/", async function (req, res) {
   let deletedUserMovieIds = [];
 
-  console.log(req.body.username);
-  const result = await getUserID(req.body.username);
+  const result = await getUserID(req.username);
 
   if (result.rowCount == 0) {
     return res.status(403);
@@ -142,7 +140,6 @@ router.delete("/internal/", async function (req, res) {
     const wasRemoved = await deleteMovie(movieID);
     if (wasRemoved) {
       deletedUserMovieIds.push(movie.id);
-      console.log(movie.name + " was removed");
     }
   }
 
@@ -152,7 +149,7 @@ router.delete("/internal/", async function (req, res) {
 });
 
 router.get("/internal", async function (req, res) {
-  const result = await getUserID(req.query.username);
+  const result = await getUserID(req.username);
 
   if (result.rowCount == 0) {
     return res.status(403);
@@ -166,7 +163,6 @@ router.get("/internal", async function (req, res) {
     movies[index].director = await getDirectors(movies[index].id);
     movies[index].cast = await getMovieCast(movies[index].id);
   }
-  console.log(movies);
   res.json({
     userItems: movies,
   });
@@ -175,13 +171,12 @@ router.post("/internal", async function (req, res) {
   let queryResults;
   let insertedUserMovieIds = [];
 
-  const result = await getUserID(req.body.username);
+  const result = await getUserID(req.username);
 
   if (result.rowCount == 0) {
     return res.status(403);
   }
   const userID = result.rows[0].id;
-  console.log(req.body.items);
   for (movie of req.body.items) {
     queryResults = await insertMovie(movie);
     const movieID = queryResults.id;
@@ -196,7 +191,6 @@ router.post("/internal", async function (req, res) {
       insertedUserMovieIds.push(movie.id);
     }
   }
-  console.log(insertedUserMovieIds);
   res.json({
     insertedUserItemIds: insertedUserMovieIds,
   });

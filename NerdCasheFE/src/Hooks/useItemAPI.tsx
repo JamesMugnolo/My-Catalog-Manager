@@ -1,9 +1,7 @@
 import axios from "axios";
 import { ItemType } from "../Pages/ItemDisplay";
-import { FunctionComponent, useState } from "react";
+import { useState } from "react";
 import { itemType } from "../Stores/reducers/ItemInterfaces";
-import { useSelector } from "react-redux";
-import { appState } from "../Stores/appStore";
 import useAxiosPrivate from "./useAxiosPrivate";
 
 export const useItemAPI = (itemTypeEnum: ItemType) => {
@@ -24,15 +22,10 @@ export const useItemAPI = (itemTypeEnum: ItemType) => {
     setResponse(null);
   }
 
-  const username = useSelector((state: appState) => {
-    return state.users!.user;
-  });
-
   const postItems = async (selectedItems: itemType[]) => {
     resetStates();
     return await axiosPrivate
       .post(`${url}/internal/`, {
-        username: username,
         items: selectedItems,
       })
       .then((res) => {
@@ -40,21 +33,14 @@ export const useItemAPI = (itemTypeEnum: ItemType) => {
       });
   };
   const fetchUserItems = async () => {
-    return await axiosPrivate
-      .get(`${url}/internal/`, {
-        params: {
-          username: username,
-        },
-      })
-      .then((res) => {
-        return res.data.userItems;
-      });
+    return await axiosPrivate.get(`${url}/internal/`).then((res) => {
+      return res.data.userItems;
+    });
   };
   const deleteUserItems = async (selectedItems: itemType[]) => {
     return await axiosPrivate
       .delete(`${url}/internal/`, {
         data: {
-          username: username,
           items: selectedItems,
         },
       })

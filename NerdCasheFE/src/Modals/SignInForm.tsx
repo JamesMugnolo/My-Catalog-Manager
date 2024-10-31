@@ -6,11 +6,9 @@ import React, {
 } from "react";
 import TextFeild from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import useForm from "react-hook-form";
 import { CustomModal } from "./CustomModal";
 import { Styles } from "./FormStyling";
 import { VisibilityLabel } from "./VisibilityLabel";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useUserAPI } from "../Hooks/useUserAPI";
 import { useNavigate } from "react-router-dom";
@@ -30,10 +28,9 @@ export const SignInForm: FunctionComponent<IFormProps> = ({
   const [isVisible, setIsVisible] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const body = { username, password };
   const [submitionError, setSubmitionError] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const { results, putUser, getUser } = useUserAPI();
+  const { putUser, getUser } = useUserAPI();
   const navigate = useNavigate();
   function closeModal() {
     setIsModalOpen(!isModalOpen);
@@ -44,7 +41,7 @@ export const SignInForm: FunctionComponent<IFormProps> = ({
     event.preventDefault();
     if (isSignInForm == true) {
       const token = await getUser(username, password);
-      console.log(token);
+
       if (token !== null) {
         dispatch({
           type: "SET_USER_CREDENTIALS",
@@ -122,12 +119,7 @@ export const SignInForm: FunctionComponent<IFormProps> = ({
   }
 
   return (
-    <CustomModal
-      open={isModalOpen}
-      handleClose={closeModal}
-      title={isSignInForm ? "Sign In" : "Sign Up"}
-      styles={{ maxWidth: "100vw", maxHeight: "100vh" }}
-    >
+    <CustomModal open={isModalOpen} handleClose={closeModal}>
       <section
         style={{
           display: "flex",

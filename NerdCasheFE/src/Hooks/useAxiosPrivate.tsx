@@ -1,8 +1,8 @@
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import useRefreshToken from "./useRefreshToken";
 import { appState } from "../Stores/appStore";
 import { useSelector } from "react-redux";
-import { Axios, AxiosInstance } from "axios";
+import { AxiosInstance } from "axios";
 import useLogout from "./useLogout";
 
 function useAxiosPrivate(axiosPrivateObj: AxiosInstance) {

@@ -1,11 +1,8 @@
 import React, { FunctionComponent } from "react";
 import { CustomLink } from "./CustomLink";
-import { ItemType } from "../../Pages/ItemDisplay";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import NavContentStyles from "./NavContent.module.css";
-import { useDispatch } from "react-redux";
-import { useUserAPI } from "../../Hooks/useUserAPI";
 import useLogout from "../../Hooks/useLogout";
 interface INavbarContent {
   isMobileView: boolean;
@@ -24,16 +21,16 @@ export const NavbarContent: FunctionComponent<INavbarContent> = ({
       }`}
       style={{ flexDirection: isMobileView ? "column" : "row" }}
     >
-      <CustomLink to={"/Games"} props={""} linkType={ItemType.GAMES}>
+      <CustomLink to={"/Games"} props={""}>
         Games
       </CustomLink>
-      <CustomLink to={"/Books"} props={""} linkType={ItemType.BOOKS}>
+      <CustomLink to={"/Books"} props={""}>
         Books
       </CustomLink>
-      <CustomLink to={"/Movies"} props={""} linkType={ItemType.MOVIES}>
+      <CustomLink to={"/Movies"} props={""}>
         Movies
       </CustomLink>
-      <CustomLink to={"/About"} props={""} linkType={ItemType.NONE}>
+      <CustomLink to={"/About"} props={""}>
         About
       </CustomLink>
       <Button

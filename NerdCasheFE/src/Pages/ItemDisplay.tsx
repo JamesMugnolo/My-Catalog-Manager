@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { FunctionComponent } from "react";
 import ItemDisplayStyles from "./ItemDisplay.module.css";
 import SearchIcon from "@mui/icons-material/Search";
@@ -6,7 +6,7 @@ import { TextField } from "@mui/material";
 import { SearchStyle } from "./itemDisplayMuIStyles";
 import { useDispatch } from "react-redux";
 import { IMovie, IVideogame } from "../Stores/reducers/ItemInterfaces";
-import { ColectionSelector } from "../Components/ColectionSelector";
+import { ColectionSelector } from "../Components/ButtonMenu/ColectionSelector";
 import { useItemAPI } from "../Hooks/useItemAPI";
 import { Carousel } from "../Components/ItemDisplayComponents/Carousel";
 
@@ -28,16 +28,23 @@ export const ItemDisplay: FunctionComponent<IItems> = ({ itemType }) => {
   const [previousSearchValue, setPreviousSearchValue] = useState("");
   const [isFetching, setIsFetching] = useState(false);
   const dispatch = useDispatch();
-  const { getItems } = useItemAPI(itemType);
+  const { getItems, fetchUserItems } = useItemAPI(itemType);
 
-  // useEffect(() => {
-  //   console.log(itemType);
-  //   if (itemType === ItemType.GAMES) {
-  //     dispatch({ type: "GET_USER_ITEMS" });
-  //   }
-  //   setSearchValue("");
-  //   setPreviousSearchValue("");
-  // }, [itemType]);
+  useEffect(() => {
+    const getUserGames = async () => {
+      dispatch({ type: "CHANGE_ITEM_COLLECTON" });
+      const userGames: ItemType[] = await fetchUserItems();
+      dispatch({
+        type: "ADD_USER_ITEMS",
+        newItems: userGames,
+      });
+    };
+
+    getUserGames();
+    setSearchValue("");
+    setPreviousSearchValue("");
+  }, [itemType]);
+
   function HasSearchValueChanged() {
     if (
       previousSearchValue == searchValue &&
@@ -74,15 +81,6 @@ export const ItemDisplay: FunctionComponent<IItems> = ({ itemType }) => {
 
   return (
     <main className={ItemDisplayStyles.mainContainer}>
-      {/* <section className={ItemDisplayStyles.itemDescriptionSection}>
-        <ColectionSelector
-          isUserCollectionActive={isUserCollectionActive}
-          setIsUserCollectionActive={setIsUserCollectionActive}
-          setSearchValue={setSearchValue}
-          setPreviousSearchValue={setPreviousSearchValue}
-        ></ColectionSelector>
-        <SelectedGameCard type={itemType}></SelectedGameCard>
-      </section> */}
       <section className={ItemDisplayStyles.resultsSection}>
         <section className={ItemDisplayStyles.searchSection}>
           <div className={ItemDisplayStyles.searchBar}>
@@ -113,8 +111,6 @@ export const ItemDisplay: FunctionComponent<IItems> = ({ itemType }) => {
               <ColectionSelector
                 isUserCollectionActive={isUserCollectionActive}
                 setIsUserCollectionActive={setIsUserCollectionActive}
-                setSearchValue={setSearchValue}
-                setPreviousSearchValue={setPreviousSearchValue}
               ></ColectionSelector>
             </div>
           </div>

@@ -1,25 +1,15 @@
 import React, { FunctionComponent } from "react";
 import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 
-interface IDynamicStyles {
-  maxWidth: string;
-  maxHeight: string;
-}
 interface IModalProps {
   open: boolean;
   handleClose: ((event: unknown) => void) | undefined;
-  title: string;
   children: any;
-  styles: IDynamicStyles;
 }
 export const CustomModal: FunctionComponent<IModalProps> = ({
   open,
   handleClose,
-  title,
   children,
-  styles,
 }) => {
   return (
     <Modal

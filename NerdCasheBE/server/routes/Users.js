@@ -17,22 +17,9 @@ router.use(credentials);
 router.use(cors(corsOptions));
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
-//On my computer the optimal number of rounds is 11 when salting a password that is 20 chars long.
-//The optimal # of rounds should be close to 250ms for normal users and the optimal password is between 14-16 chars
-//So my testing with using console.time() and salting with a password of 20 chars resulted in the optimal # of rounds
-//being 11. 12 rounds is over by about 50ms but doable if i want the app to be more secure.
+
 const saltRounds = 11;
 
-//EX code for rounds
-//------------------------------
-// psw = "s$cr3T12345678912345";
-// for (i = 1; 1 < 15; i++) {
-//   console.time(`${i} rounds`);
-//   const hashedPwd = await bcrypt.hash(psw, i);
-//   console.timeEnd(`${i} rounds`);
-// }
-//------------------------------------------
-//router.use(cors({ origin: "https://jamesmugnoloportfolio.netlify.app" }));
 router.get("/refresh", async (req, res) => {
   const cookies = req.headers.cookie;
   if (!cookies) return res.status(401).send("Session Expired");
@@ -62,15 +49,13 @@ router.post("/logout", async function (req, res) {
     res.clearCookie("jwt", { httpOnly: true, sameSite: "none", secure: true });
     jwt.verify(refToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
       if (err || result.rows[0].username !== decoded.username) {
-        console.log("errpr");
         return res.sendStatus(403);
       }
       removeRefreshToken(decoded.username);
     });
     return res.sendStatus(204);
   } else {
-    const username = req.body.username;
-    removeRefreshToken(username);
+    removeRefreshToken(req.username);
     return res.sendStatus(204);
   }
 });
@@ -91,9 +76,7 @@ router.get("/", async function (req, res) {
     const accessToken = createJWTToken(res, username);
 
     res.status(200).json({ accessToken });
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 });
 function createJWTToken(res, username) {
   const accessToken = jwt.sign(
@@ -120,7 +103,6 @@ function createJWTToken(res, username) {
 router.put("/", async function (req, res) {
   username = req.body.username;
   password = req.body.password;
-  console.log(password);
   const hashedPwd = await bcrypt.hash(password, saltRounds);
   const querySuccessful = await insertUser(username, hashedPwd);
   if (!querySuccessful)

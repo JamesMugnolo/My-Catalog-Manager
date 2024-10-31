@@ -1,10 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
-import { CustomLink } from "./CustomLink";
 import NavbarStyles from "./Navbar.module.css";
-import Button from "@mui/material/Button";
-import { ItemType } from "../../Pages/ItemDisplay";
 import { Link } from "react-router-dom";
-import { useViewport } from "../../Hooks/useVeiwport";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Sidebar } from "./sidebar";
 import { NavbarContent } from "./NavContent";

@@ -1,8 +1,6 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import useLogout from "./useLogout";
-import { useNavigate } from "react-router-dom";
-import { useUserAPI } from "./useUserAPI";
 
 const useRefreshToken = () => {
   const dispatch = useDispatch();

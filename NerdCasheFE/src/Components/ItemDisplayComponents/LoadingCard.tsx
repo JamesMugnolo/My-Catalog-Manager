@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent } from "react";
 import LoadingCardStyles from "./LoadingCard.module.css";
 
 export const LoadingCard: FunctionComponent = () => {

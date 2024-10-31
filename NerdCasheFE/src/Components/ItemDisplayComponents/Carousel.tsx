@@ -1,21 +1,9 @@
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import CarouselStyles from "./Carousel.module.css";
-import { useSelector, useDispatch } from "react-redux";
-import { appState } from "../../Stores/appStore";
+import { useDispatch } from "react-redux";
 import { CardSelectionType, ItemCard } from "./ItemCard";
 import { ItemType } from "../../Pages/ItemDisplay";
-import {
-  IItems,
-  IMovie,
-  IVideogame,
-  itemType,
-} from "../../Stores/reducers/ItemInterfaces";
-import axios from "axios";
+import { itemType } from "../../Stores/reducers/ItemInterfaces";
 import { useItemAPI } from "../../Hooks/useItemAPI";
 import { useItemSelectors } from "../../Hooks/useItemSelectors";
 import { LoadingCard } from "./LoadingCard";
@@ -47,7 +35,6 @@ export const Carousel: FunctionComponent<ICarousel> = ({
   const [isSelectionButtondisabled, setIsSelectionButtonDisabled] =
     useState(true);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {

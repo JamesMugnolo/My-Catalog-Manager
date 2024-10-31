@@ -2,7 +2,6 @@ import React, { FunctionComponent } from "react";
 import SidebarStyles from "./sidebar.module.css";
 import { NavbarContent } from "./NavContent";
 import { AnimatePresence, motion } from "framer-motion";
-import { Translate } from "@mui/icons-material";
 import { useMediaQuery } from "../../Hooks/useMediaQuery";
 
 interface ISidebarProps {

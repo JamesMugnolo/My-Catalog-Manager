@@ -81,6 +81,7 @@ exports.getPublishers = async function (external_game_id) {
   return gamePublishers;
 };
 exports.insertGame = async function (game) {
+  const release = new Date(Number(game.release_date));
   await pool
     .query(
       "INSERT INTO game (external_game_id,name,rating,release_date,image_url,storyline)" +
@@ -89,7 +90,7 @@ exports.insertGame = async function (game) {
         Number(game.id),
         game.name,
         Number(game.rating),
-        Number(game.release_date),
+        release,
         game.image_url,
         game.description,
       ]
@@ -102,7 +103,6 @@ exports.insertGame = async function (game) {
       queryResults.id = await getGameID(game.id);
       queryResults.wasDuplicate = true;
     });
-  console.log();
   return queryResults;
 };
 
@@ -142,7 +142,6 @@ exports.insertGameConsole = async function (console_id, game_id) {
   );
 };
 exports.insertGamePublisher = async function (publisher_id, game_id) {
-  console.log(publisher_id + " : " + game_id);
   await pool.query(
     "INSERT INTO game_gamePublisher ( game_id,publisher_id) VALUES ($1,$2)",
     [game_id, publisher_id]

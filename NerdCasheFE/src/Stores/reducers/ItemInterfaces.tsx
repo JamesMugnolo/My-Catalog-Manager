@@ -8,9 +8,9 @@ export interface IMovie extends IItems {
   cast: string[];
 }
 export interface IBook extends IItems {
-  numPages: number;
+  num_pages: number;
   authors: string[];
-  numEditions: number;
+  num_editions: number;
 }
 export interface IItems {
   id: number;

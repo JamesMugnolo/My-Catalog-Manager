@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from "react";
-import DropdownStyles from "./DropdownStyles.module.css";
+import ButtonMenuStyles from "./ButtonMenuStyles.module.css";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { useClickOut } from "../Hooks/useClickOut";
+import { useClickOut } from "../../Hooks/useClickOut";
 interface IButtonMenu {
   label: string;
   selectionItems: string[];
@@ -35,33 +35,33 @@ export const ButtonMenu: FunctionComponent<IButtonMenu> = ({
   };
   return (
     <>
-      <div className={DropdownStyles.dropdown}>
+      <div className={ButtonMenuStyles.dropdown}>
         <div
-          className={DropdownStyles.button}
+          className={ButtonMenuStyles.button}
           onClick={(e) => {
             setIsMenuActive(!isMenuActive);
           }}
           ref={divRef}
         >
-          <span className={DropdownStyles.buttonLabel}>
+          <span className={ButtonMenuStyles.buttonLabel}>
             <label>{label}</label>
           </span>
-          <span className={DropdownStyles.buttonContent}>
+          <span className={ButtonMenuStyles.buttonContent}>
             <label>{selectedItem}</label>
             <ArrowDropDownIcon
-              className={DropdownStyles.arrow}
+              className={ButtonMenuStyles.arrow}
             ></ArrowDropDownIcon>
           </span>
         </div>
         {isMenuActive && (
-          <div className={DropdownStyles.itemContainer}>
+          <div className={ButtonMenuStyles.itemContainer}>
             {selectionItems.map((item: string, index) => {
               return (
                 <>
                   <div
                     key={item}
-                    className={`${DropdownStyles.item} ${
-                      selectedItem === item ? DropdownStyles.active : ""
+                    className={`${ButtonMenuStyles.item} ${
+                      selectedItem === item ? ButtonMenuStyles.active : ""
                     } `}
                     onClick={(e) => handleChange(item)}
                   >

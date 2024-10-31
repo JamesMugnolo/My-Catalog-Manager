@@ -104,8 +104,7 @@ router.delete("/internal/", async function (req, res) {
   let queryResults;
   let deletedUserGameIds = [];
 
-  console.log(req.body.username);
-  const result = await getUserID(req.body.username);
+  const result = await getUserID(req.username);
 
   if (result.rowCount == 0) {
     return res.status(403);
@@ -116,7 +115,6 @@ router.delete("/internal/", async function (req, res) {
     const wasRemoved = await deleteGame(gameID);
     if (wasRemoved) {
       deletedUserGameIds.push(game.id);
-      console.log(game.name + " was removed");
     }
   }
 
@@ -126,22 +124,19 @@ router.delete("/internal/", async function (req, res) {
 });
 
 router.get("/internal", async function (req, res) {
-  console.log("in internal");
-  const result = await getUserID(req.query.username);
+  const result = await getUserID(req.username);
 
   if (result.rowCount == 0) {
     return res.status(403);
   }
 
   const userID = result.rows[0].id;
-  console.log(userID);
   let games = await getUserGames(userID);
 
   for (let index = 0; index < games.length; index++) {
     games[index].platforms = await getConsoles(games[index].id);
     games[index].companies = await getPublishers(games[index].id);
   }
-  console.log(games);
   res.json({
     userItems: games,
   });
@@ -150,8 +145,7 @@ router.post("/internal", async function (req, res) {
   let queryResults;
   let insertedUserGameIds = [];
 
-  console.log(req.body.username);
-  const result = await getUserID(req.body.username);
+  const result = await getUserID(req.username);
 
   if (result.rowCount == 0) {
     return res.status(403);
@@ -160,6 +154,7 @@ router.post("/internal", async function (req, res) {
 
   for (game of req.body.items) {
     queryResults = await insertGame(game);
+
     const gameID = queryResults.id;
 
     if (queryResults.wasDuplicate === false) {
@@ -172,17 +167,13 @@ router.post("/internal", async function (req, res) {
       insertedUserGameIds.push(game.id);
     }
   }
-  console.log(insertedUserGameIds);
   res.json({
     insertedUserItemIds: insertedUserGameIds,
   });
 });
 async function insertConsoleList(consoles, gameID, queryResults) {
-  console.log(consoles);
   for (gameConsole of consoles) {
-    console.log(gameConsole);
     queryResults = await insertConsole(gameConsole);
-    console.log(queryResults.id);
     await insertGameConsole(queryResults.id, gameID);
   }
 }

@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { appState } from "../Stores/appStore";
 import { ItemType } from "../Pages/ItemDisplay";

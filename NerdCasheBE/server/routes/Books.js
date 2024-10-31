@@ -16,7 +16,7 @@ const { getUserID } = require("../../database/Users/user_db_commands.js");
 router.get("/external/:title", async function (req, res) {
   let ItemIds = [];
   let formattedItems = [];
-  console.log("in book ext get");
+
   //grabs all the movie Ids from TMDB
   let result = await axios
     .request(
@@ -53,7 +53,7 @@ router.get("/external/:title", async function (req, res) {
             })
             .join();
         }
-        console.log(description);
+
         return description;
       });
       if (storyline != "") {
@@ -70,8 +70,8 @@ router.get("/external/:title", async function (req, res) {
           image_url: `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`,
           description: storyline,
           authors: book.author_name,
-          numEditions: book.edition_count,
-          numPages: book.number_of_pages_median,
+          num_editions: book.edition_count,
+          num_pages: book.number_of_pages_median,
         };
         formattedItems.push(formattedBook);
       }
@@ -85,21 +85,20 @@ function getFirstReleaseDate(published_dates, first_published_year) {
     const dateStrings = published_dates.filter((date) =>
       date.includes(first_published_year)
     );
-    //console.log(dateStrings);
+
     for (date of dateStrings) {
       formattedDates.push(new Date(date));
     }
-    //console.log("converted all dates");
   }
   formattedDates = formattedDates.sort((d1, d2) => d1 - d2);
-  console.log(formattedDates[0]);
+
   return formattedDates[0];
 }
 router.delete("/internal/", async function (req, res) {
   let queryResults;
   let deletedUserBookIds = [];
 
-  const result = await getUserID(req.body.username);
+  const result = await getUserID(req.username);
 
   if (result.rowCount == 0) {
     return res.status(403);
@@ -110,7 +109,6 @@ router.delete("/internal/", async function (req, res) {
     const wasRemoved = await deleteBook(bookID);
     if (wasRemoved) {
       deletedUserBookIds.push(book.id);
-      console.log(book.name + " was removed");
     }
   }
 
@@ -120,7 +118,7 @@ router.delete("/internal/", async function (req, res) {
 });
 
 router.get("/internal", async function (req, res) {
-  const result = await getUserID(req.query.username);
+  const result = await getUserID(req.username);
 
   if (result.rowCount == 0) {
     return res.status(403);
@@ -141,36 +139,31 @@ router.post("/internal", async function (req, res) {
   let queryResults;
   let insertedUserBookIds = [];
 
-  console.log(req.body);
-  const result = await getUserID(req.body.username);
+  const result = await getUserID(req.username);
 
   if (result.rowCount == 0) {
     return res.status(403);
   }
   const userID = result.rows[0].id;
-  console.log(userID);
   for (book of req.body.items) {
     queryResults = await insertBook(book);
     const bookID = queryResults.id;
-    console.log(bookID);
+
     if (queryResults.wasDuplicate === false) {
       await insertAuthorList(book.authors, bookID, queryResults);
     }
-
     queryResults = await insertUserBook(bookID, userID);
     if (queryResults.wasDuplicate === false) {
       insertedUserBookIds.push(book.id);
     }
   }
-
   res.json({
     insertedUserItemIds: insertedUserBookIds,
   });
 });
 async function insertAuthorList(authors, bookID, queryResults) {
-  for (author of authors) {
+  for (const author of authors) {
     queryResults = await insertAuthor(author);
-    console.log(queryResults.id);
     await insertBookAuthor(queryResults.id, bookID);
   }
 }

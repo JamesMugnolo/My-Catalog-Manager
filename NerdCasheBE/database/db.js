@@ -11,14 +11,13 @@ const poolConfig = {
 };
 
 const pool = new Pool(poolConfig);
-console.log(poolConfig);
+
 const db = {
   runMigrations: async function () {
     const client = await pool.connect();
     try {
       await migrate({ client }, path.resolve(__dirname, "migrations/sql"));
     } catch (err) {
-      console.error("migration failed", err);
     } finally {
       client.release();
     }

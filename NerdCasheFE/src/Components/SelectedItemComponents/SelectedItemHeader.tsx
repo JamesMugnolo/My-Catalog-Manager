@@ -1,22 +1,16 @@
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { FunctionComponent, useRef, useState } from "react";
 import SelectedItemHeaderStyles from "./SelectedItemHeader.module.css";
-import { ContentType, SingleLineContent } from "./SingleLineContent";
-import { TextSlider } from "../ItemCard/TextSlider";
-import { DropdownMenu } from "../ItemCard/DropdownMenu";
+import { DropdownMenu } from "./DropdownMenu";
 import useResizeObserver from "@react-hook/resize-observer";
 
 interface ISelectedItemHeader {
-  contributor: string[];
+  title: string;
+  items: string[];
 }
 
 export const SelectedItemHeader: FunctionComponent<ISelectedItemHeader> = ({
-  contributor,
+  title,
+  items,
 }) => {
   const divRef = useRef<HTMLDivElement>(null);
 
@@ -43,7 +37,8 @@ export const SelectedItemHeader: FunctionComponent<ISelectedItemHeader> = ({
           }}
         >
           <DropdownMenu
-            menuItems={contributor}
+            menuItems={items}
+            title={title}
             dRef={divRef}
             setIsExpanded={setIsContributorListExpanded}
             isExpanded={isContributorListExpanded}

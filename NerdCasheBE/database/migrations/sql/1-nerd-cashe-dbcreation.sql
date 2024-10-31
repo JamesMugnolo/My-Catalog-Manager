@@ -13,7 +13,7 @@ name varchar(50),
 rating numeric(2),
 release_date date,
 image_url varchar(75),
-storyline varchar(500),
+storyline text,
 page_count numeric(4),
 edition_count integer
 );
@@ -78,7 +78,7 @@ id serial PRIMARY KEY,
 external_game_id integer NOT NULL UNIQUE,
 name varchar(75) NOT NULL,
 rating numeric(2) NOT NULL,
-release_date bigint NOT NULL,
+release_date date NOT NULL,
 image_url varchar(75) NOT NULL,
 storyline text
 );

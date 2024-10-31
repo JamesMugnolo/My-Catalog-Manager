@@ -10,9 +10,8 @@
   height: fit-content;
   display: flex;
   flex-direction: column;
-  letter-spacing: 1px;
   position: relative;
-
+  color: white;
   width: fit-content;
 }
 .titleContainer {

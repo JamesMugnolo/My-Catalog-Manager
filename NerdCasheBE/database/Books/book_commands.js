@@ -26,34 +26,35 @@ const getBookID = (exports.getBookID = async function (external_book_id) {
 });
 
 exports.getUserBooks = async function (user_id) {
-  console.log("in get user book");
   return await pool
     .query(
-      "SELECT external_book_id AS id, name, release_date, image_url, storyline AS description, rating, page_count AS numPages, edition_count AS numEditions FROM book INNER JOIN user_book on book.id = user_book.book_id INNER JOIN nerd_cashe_user ON nerd_cashe_user.id = user_book.user_id WHERE nerd_cashe_user.id = $1",
+      "SELECT external_book_id AS id, name, release_date, image_url, storyline AS description, rating, page_count AS num_pages, edition_count AS num_editions FROM book INNER JOIN user_book on book.id = user_book.book_id INNER JOIN nerd_cashe_user ON nerd_cashe_user.id = user_book.user_id WHERE nerd_cashe_user.id = $1",
       [user_id]
     )
     .then((res) => {
       return res.rows;
     })
     .catch((err) => {});
-  return user_books;
 };
 
 exports.getBookAuthors = async function (external_book_id) {
   const book_authors = await pool
     .query(
-      "SELECT name FROM author INNER JOIN book_author on author.id = book_author.author_id WHERE book_author.book_id = $1",
+      "SELECT author.name FROM author INNER JOIN book_author on author.id = book_author.author_id INNER JOIN book ON book.id = book_author.book_id WHERE book.external_book_id = $1",
       [external_book_id]
     )
     .then((res) => {
-      return res.rows;
+      let results = [];
+      for (author of res.rows) {
+        results.push(author.name);
+      }
+      return results;
     })
     .catch((err) => {});
   return book_authors;
 };
 
 exports.insertBook = async function (book) {
-  console.log(book);
   await pool
     .query(
       "INSERT INTO book (external_book_id,name,rating,release_date,image_url,storyline,page_count,edition_count )" +
@@ -65,17 +66,15 @@ exports.insertBook = async function (book) {
         book.release_date,
         book.image_url,
         book.description,
-        book.numPages,
-        book.numEditions,
+        book.num_pages,
+        book.num_editions,
       ]
     )
     .then((res) => {
-      console.log(res);
       queryResults.id = res.rows[0].id;
       queryResults.wasDuplicate = false;
     })
     .catch(async (err) => {
-      console.log("in Error");
       queryResults.id = await getBookID(book.id);
       queryResults.wasDuplicate = true;
     });
@@ -96,7 +95,7 @@ exports.insertAuthor = async function (author) {
   return queryResults;
 };
 
-exports.insertBookAuthor = async function (book_id, author_id) {
+exports.insertBookAuthor = async function (author_id, book_id) {
   await pool.query(
     "INSERT INTO book_author (book_id, author_id) VALUES ($1,$2)",
     [book_id, author_id]

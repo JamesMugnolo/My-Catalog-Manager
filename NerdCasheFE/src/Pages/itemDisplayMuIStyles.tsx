@@ -1,6 +1,3 @@
-import { BorderAll, Margin } from "@mui/icons-material";
-import { none } from "../Modals/MobileItemViewModal";
-
 export const SearchStyle = {
   field: {
     "& .MuiInputBase-root": {
