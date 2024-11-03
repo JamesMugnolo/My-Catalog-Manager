@@ -4,6 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
+import { Provider } from "react-redux";
+import { appStore } from "./Stores/appStore";
+import { BrowserRouter } from "react-router-dom";
 if (process.env.NODE_ENV === "production") {
   disableReactDevTools();
 }
@@ -12,11 +15,17 @@ const root = ReactDOM.createRoot(
 );
 function getEntryPoint() {
   if (process.env.NODE_ENV === "production") {
-    return <App />;
+    return (
+      <Provider store={appStore}>
+        <App />
+      </Provider>
+    );
   } else {
     return (
       <React.StrictMode>
-        <App />
+        <Provider store={appStore}>
+          <App />
+        </Provider>
       </React.StrictMode>
     );
   }
