@@ -1,13 +1,13 @@
-FROM node:20.9.0
-
+FROM node:alpine as build
 WORKDIR /app
-RUN npm i @craco/craco
-COPY package.json .
-
+COPY package.json package-lock.json ./
 RUN npm install
-
 COPY . .
+RUN npm run build
 
-EXPOSE 3000
+FROM nginx:alpine
 
-CMD ["npm", "start"]
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

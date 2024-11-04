@@ -10,7 +10,7 @@ const useLogout = () => {
     return state.users!.user;
   });
   axios.defaults.withCredentials = true;
-  const url = `${process.env.REACT_APP_BASE_URL}api/users/`;
+  const url = `${process.env.REACT_APP_BASE_URL}/api/Users/`;
   const userLogout = async () => {
     await axios.post(url + "logout", {
       username: username,

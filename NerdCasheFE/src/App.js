@@ -11,9 +11,7 @@ import {
 import { Navbar } from "./Components/Navbar/Navbar.tsx";
 import { ItemDisplay } from "./Pages/ItemDisplay.tsx";
 import { ItemType } from "./Pages/ItemDisplay.tsx";
-import { Provider } from "react-redux";
-import { appStore } from "./Stores/appStore.tsx";
-import { MissingPage } from "./Pages/MissingPage";
+
 import useAuth from "./Hooks/useAuth";
 function App() {
   const isAuthenticated = useAuth();

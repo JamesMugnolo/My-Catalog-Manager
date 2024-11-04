@@ -9,9 +9,9 @@ export const useItemAPI = (itemTypeEnum: ItemType) => {
   const [error, setError] = useState("");
   const results = { response, error };
 
-  const url = `${process.env.REACT_APP_BASE_URL}api/${itemTypeEnum}`;
+  const url = `${process.env.REACT_APP_BASE_URL}/api/${itemTypeEnum}`;
   const axiosObj = axios.create({
-    baseURL: process.env.REACT_APP_BASE_URL,
+    baseURL: url,
     headers: { "Content-Type": "application/json" },
     withCredentials: true,
   }); // create an axios instance with no interceptors
@@ -50,9 +50,7 @@ export const useItemAPI = (itemTypeEnum: ItemType) => {
   };
   async function getItems(searchValue: string) {
     const Items = await axiosPrivate
-      .get(
-        `${process.env.REACT_APP_BASE_URL}api/${itemTypeEnum}/external/${searchValue}`
-      )
+      .get(`${url}/external/${searchValue}`)
       .then(function (response) {
         return response.data;
       })

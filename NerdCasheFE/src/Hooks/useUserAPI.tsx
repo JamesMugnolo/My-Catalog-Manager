@@ -12,10 +12,10 @@ export const useUserAPI = () => {
   const [error, setError] = useState("");
   const results = { response, error };
   const dispatch = useDispatch();
-  const url = `${process.env.REACT_APP_BASE_URL}api/users/`;
+  const url = `${process.env.REACT_APP_BASE_URL}/api/Users/`;
 
   const axiosObj = axios.create({
-    baseURL: `${process.env.REACT_APP_BASE_URL}api/users/`,
+    baseURL: `${process.env.REACT_APP_BASE_URL}/api/Users/`,
     headers: { "Content-Type": "application/json" },
     withCredentials: true,
   }); // create an axios instance with no interceptors
