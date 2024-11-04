@@ -4,12 +4,19 @@
 
 body {
   background-image: linear-gradient(rgba(2, 2, 2, 0.2), rgba(0, 0, 0, 0.2)),
-  url("DarkWebsiteBackground.jpg");
-background-size: cover;
-background-repeat: no-repeat;
+    url("DarkWebsiteBackground.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 100vw;
   height: 100vh;
   margin: 0;
   padding: 0;
 }
 
+html,
+body,
+.root,
+#app,
+#app > div {
+  height: 100%;
+}

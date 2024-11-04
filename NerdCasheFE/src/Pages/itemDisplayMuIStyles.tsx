@@ -11,7 +11,6 @@ export const SearchStyle = {
       "& input": {
         color: "black",
         padding: "0px",
-        paddingLeft: "1%",
         borderRadious: "5px",
         background: "white",
         fontSize: "calc(1rem + 1vw)",
@@ -64,7 +63,6 @@ export const SearchStyle = {
       },
       "& fieldset": {
         border: "none",
-        paddingLeft: "2%",
         background: "none",
       },
     },

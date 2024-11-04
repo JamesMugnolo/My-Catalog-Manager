@@ -25,6 +25,7 @@ export const Sidebar: FunctionComponent<ISidebarProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ type: "tween" }}
             className={SidebarStyles.SidebarContainer}
             onFocus={(e) => e.stopPropagation()}
             onClick={closeSidebar}

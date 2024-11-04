@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useState } from "react";
 import NavbarStyles from "./Navbar.module.css";
-import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Sidebar } from "./sidebar";
 import { NavbarContent } from "./NavContent";
@@ -14,7 +13,6 @@ export const Navbar: FunctionComponent = () => {
 
   function HandleClick(): void {
     setIsMenuOpen(true);
-    console.log("clicked");
   }
 
   return (
@@ -28,13 +26,9 @@ export const Navbar: FunctionComponent = () => {
       </AnimatePresence>
       <nav className={NavbarStyles.nav}>
         <div className={NavbarStyles.siteTitleContainer}>
-          <Link
-            to={"/"}
-            className={NavbarStyles.siteTitle}
-            style={{ fontSize: "26px" }}
-          >
+          <h1 className={NavbarStyles.siteTitle} style={{ fontSize: "26px" }}>
             Nerd Cashe
-          </Link>
+          </h1>
         </div>
         {isMobileView ? (
           <button

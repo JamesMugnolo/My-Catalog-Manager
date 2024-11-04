@@ -60,10 +60,14 @@
   font-weight: bolder;
   filter: drop-shadow(-1px 1px 10px rgb(100, 65, 165));
 }
-
+@media (max-width: 400px) {
+  .apiDescriptionContainer {
+    width: 80%;
+    flex-direction: column;
+  }
+}
 @media (max-width: 768px) {
   .apiDescriptionContainer {
-    height: 60%;
     width: 100%;
     flex-direction: column;
   }

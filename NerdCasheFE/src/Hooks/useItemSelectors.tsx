@@ -12,23 +12,28 @@ export const useItemSelectors = (itemTypeEnum: ItemType) => {
   const userItems = useSelector((state: appState) => {
     if (itemTypeEnum == ItemType.GAMES)
       return state.items!.userItems as IVideogame[];
-    return state.items!.userItems as IMovie[];
+    if (itemTypeEnum == ItemType.MOVIES)
+      return state.items!.userItems as IMovie[];
+    return state.items!.userItems as IBook[];
   });
 
   const searchedItems = useSelector((state: appState) => {
     if (itemTypeEnum == ItemType.GAMES)
       return state.items!.searchedItems as IVideogame[];
-    return state.items!.searchedItems as IMovie[];
+    if (itemTypeEnum == ItemType.MOVIES)
+      return state.items!.searchedItems as IMovie[];
+    return state.items!.searchedItems as IBook[];
   });
 
   const selectedItems = useSelector((state: appState) => {
     if (itemTypeEnum == ItemType.GAMES)
       return state.items!.selectedItems as IVideogame[];
-    return state.items!.selectedItems as IMovie[];
+    if (itemTypeEnum == ItemType.MOVIES)
+      return state.items!.selectedItems as IMovie[];
+    return state.items!.selectedItems as IBook[];
   });
 
   const filterSelectedItemsByIDs = (itemIDs: number[]) => {
-    console.log(itemIDs);
     if (itemIDs != null) {
       return (selectedItems as itemType[]).filter((item: itemType) => {
         return itemIDs.includes(item.id);

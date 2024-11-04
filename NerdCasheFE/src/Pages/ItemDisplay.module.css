@@ -101,9 +101,10 @@
   .searchText {
     font-size: 1rem;
     margin-right: 0.5rem;
+    padding-left: 0.25rem;
   }
   .searchSection {
-    margin-bottom: 0;
+    margin-bottom: 1.5rem;
   }
 }
 @media (min-width: 768px) {
@@ -118,6 +119,10 @@
     height: 3.25rem;
     padding-left: 0;
     margin-right: 0.5rem;
+    padding-left: 0.5rem;
+  }
+  .searchSection {
+    height: 3.25rem;
   }
 }
 @media (min-width: 1024px) {
@@ -136,9 +141,13 @@
     height: 3.25rem;
     padding-left: 0;
     margin-right: 0.5rem;
+    padding-left: 0.5rem;
   }
   .searchSection {
     margin-bottom: 1.25rem;
+  }
+  .searchSection {
+    height: 3.25rem;
   }
 }
 @media (min-width: 1600px) {
@@ -153,8 +162,12 @@
     height: 3.25rem;
     padding-left: 0;
     margin-right: 0.5rem;
+    padding-left: 0.5rem;
   }
   .searchSection {
     margin-bottom: 1.25rem;
+  }
+  .searchSection {
+    height: 3.25rem;
   }
 }

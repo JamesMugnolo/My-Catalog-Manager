@@ -3,7 +3,12 @@ import CarouselStyles from "./Carousel.module.css";
 import { useDispatch } from "react-redux";
 import { CardSelectionType, ItemCard } from "./ItemCard";
 import { ItemType } from "../../Pages/ItemDisplay";
-import { itemType } from "../../Stores/reducers/ItemInterfaces";
+import {
+  IBook,
+  IMovie,
+  itemType,
+  IVideogame,
+} from "../../Stores/reducers/ItemInterfaces";
 import { useItemAPI } from "../../Hooks/useItemAPI";
 import { useItemSelectors } from "../../Hooks/useItemSelectors";
 import { LoadingCard } from "./LoadingCard";
@@ -14,12 +19,14 @@ interface ICarousel {
   SetUserCollectionActiveStatus: (value: boolean) => void;
   itemTypeEnum: ItemType;
   isFetching: boolean;
+  searchText: string;
 }
 export const Carousel: FunctionComponent<ICarousel> = ({
   isUserCollectionActive,
   SetUserCollectionActiveStatus,
   itemTypeEnum,
   isFetching,
+  searchText,
 }) => {
   const { postItems, deleteUserItems } = useItemAPI(itemTypeEnum);
 
@@ -36,13 +43,44 @@ export const Carousel: FunctionComponent<ICarousel> = ({
     useState(true);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const dispatch = useDispatch();
-
+  const [filteredItems, setFilteredItems] = useState(getUserItems);
+  function filterList() {
+    if (itemTypeEnum === ItemType.MOVIES) {
+      setFilteredItems(
+        (getUserItems() as IMovie[]).filter((item: IMovie) =>
+          item.name.includes(searchText)
+        )
+      );
+    }
+    if (itemTypeEnum === ItemType.BOOKS) {
+      setFilteredItems(
+        (getUserItems() as IBook[]).filter((item: IBook) =>
+          item.name.includes(searchText)
+        )
+      );
+    }
+    if (itemTypeEnum === ItemType.GAMES) {
+      setFilteredItems(
+        (getUserItems() as IVideogame[]).filter((item: IVideogame) =>
+          item.name.includes(searchText)
+        )
+      );
+    }
+  }
   useEffect(() => {
     if (selectedItemsIsEmpty()) {
       setIsSelectionButtonDisabled(true);
     } else setIsSelectionButtonDisabled(false);
   }, [getSelectedItems()]);
 
+  useEffect(() => {
+    if (isUserCollectionActive) {
+      filterList();
+    }
+  }, [searchText]);
+  useEffect(() => {
+    setFilteredItems(getUserItems());
+  }, [getUserItems()]);
   function GetTitle(): React.ReactNode {
     return !isUserCollectionActive
       ? `Searched ${itemTypeEnum}`
@@ -88,22 +126,22 @@ export const Carousel: FunctionComponent<ICarousel> = ({
           {isFetching ? <LoadingCard /> : ""}
           <ul className={CarouselStyles.imageGallery}>
             {isUserCollectionActive
-              ? getUserItems().map((game: itemType, index) => {
+              ? filteredItems.map((item: itemType, index) => {
                   return (
                     <li key={index}>
                       <ItemCard
-                        item={game}
+                        item={item}
                         selectionType={CardSelectionType.SELECTABLE}
                         setIsInfoModalOpen={setIsInfoModalOpen}
                       />
                     </li>
                   );
                 })
-              : getSearchedItems().map((game: itemType) => {
+              : getSearchedItems().map((item: itemType) => {
                   return (
-                    <li key={game.id} style={{ zIndex: 0 }}>
+                    <li key={item.id} style={{ zIndex: 0 }}>
                       <ItemCard
-                        item={game}
+                        item={item}
                         selectionType={CardSelectionType.SELECTABLE}
                         setIsInfoModalOpen={setIsInfoModalOpen}
                       />

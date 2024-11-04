@@ -29,7 +29,6 @@ export const DescriptionSection: FunctionComponent<IDescriptionSection> = ({
     }
   }
   useResizeObserver(spanRef, (entry) => {
-    console.log(entry);
     if (!entry) return;
     if (!DescriptionRef || DescriptionRef.current == undefined) return;
     if (!spanRef || spanRef.current == undefined) return;

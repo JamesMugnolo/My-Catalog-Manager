@@ -8,6 +8,7 @@
   color: white;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding-left: 0.5rem;
   border-radius: 5px;
   height: 100%;
@@ -69,10 +70,7 @@
     margin-bottom: -0.25rem;
   }
   .buttonContent {
-    font-size: 80%;
-  }
-  .dropdown {
-    height: 2.5rem;
+    font-size: 85%;
   }
 }
 @media (min-width: 768px) {

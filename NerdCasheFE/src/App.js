@@ -15,7 +15,6 @@ import { ItemType } from "./Pages/ItemDisplay.tsx";
 import useAuth from "./Hooks/useAuth";
 function App() {
   const isAuthenticated = useAuth();
-  console.log(isAuthenticated);
   return (
     <Router>
       {isAuthenticated && <Navbar></Navbar>}

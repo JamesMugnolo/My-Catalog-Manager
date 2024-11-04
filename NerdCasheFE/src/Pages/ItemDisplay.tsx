@@ -78,30 +78,41 @@ export const ItemDisplay: FunctionComponent<IItems> = ({ itemType }) => {
     if (itemType == ItemType.GAMES) return data as IVideogame[];
     return data as IMovie[];
   }
-
   return (
     <main className={ItemDisplayStyles.mainContainer}>
       <section className={ItemDisplayStyles.resultsSection}>
         <section className={ItemDisplayStyles.searchSection}>
           <div className={ItemDisplayStyles.searchBar}>
-            <button
-              className={ItemDisplayStyles.searchButton}
-              onClick={() => {
-                isUserCollectionActive ? "" : GetItems();
+            {!isUserCollectionActive && (
+              <button
+                className={ItemDisplayStyles.searchButton}
+                onClick={() => {
+                  isUserCollectionActive ? "" : GetItems();
+                }}
+              >
+                <SearchIcon
+                  sx={{
+                    width: "80%",
+                    height: "80%",
+                    color: "black",
+                  }}
+                />
+              </button>
+            )}
+            <div
+              className={ItemDisplayStyles.searchText}
+              style={{
+                borderTopLeftRadius: !isUserCollectionActive ? "0px" : "5px",
+                borderBottomLeftRadius: !isUserCollectionActive ? "0px" : "5px",
               }}
             >
-              <SearchIcon
-                sx={{
-                  width: "80%",
-                  height: "80%",
-                  color: "black",
-                }}
-              />
-            </button>
-            <div className={ItemDisplayStyles.searchText}>
               <TextField
                 fullWidth
-                placeholder={`search for ${itemType}...`}
+                placeholder={
+                  isUserCollectionActive
+                    ? `Find your ${itemType.toLowerCase()}...`
+                    : `Search for ${itemType.toLowerCase()}...`
+                }
                 sx={SearchStyle.field}
                 value={searchValue}
                 onChange={handleTypeingChange}
@@ -121,6 +132,7 @@ export const ItemDisplay: FunctionComponent<IItems> = ({ itemType }) => {
             SetUserCollectionActiveStatus={SetUserCollectionActiveStatus}
             itemTypeEnum={itemType}
             isFetching={isFetching}
+            searchText={searchValue}
           />
         </section>
       </section>

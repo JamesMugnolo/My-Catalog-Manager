@@ -83,7 +83,8 @@ function FormatVideogameData(data) {
     let companies = [];
     if (entry.involved_companies != undefined) {
       for (const studio of entry.involved_companies) {
-        companies.push(studio.company.name);
+        if (!companies.includes(studio.company.name))
+          companies.push(studio.company.name);
       }
     }
     const formattedGame = {
@@ -151,7 +152,6 @@ router.post("/internal", async function (req, res) {
     return res.status(403);
   }
   const userID = result.rows[0].id;
-
   for (game of req.body.items) {
     queryResults = await insertGame(game);
 

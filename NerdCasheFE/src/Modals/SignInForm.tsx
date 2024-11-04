@@ -129,7 +129,6 @@ export const SignInForm: FunctionComponent<IFormProps> = ({
         }}
         onClick={(e) => {
           e.stopPropagation();
-          closeModal();
         }}
       >
         <form

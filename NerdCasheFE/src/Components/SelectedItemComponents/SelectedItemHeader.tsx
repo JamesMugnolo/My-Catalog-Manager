@@ -21,7 +21,6 @@ export const SelectedItemHeader: FunctionComponent<ISelectedItemHeader> = ({
 
   useResizeObserver(divRef, (entry) => {
     if (!divRef || divRef.current == undefined || !entry) return;
-    console.log(isContributorListExpanded);
     if (!isContributorListExpanded) {
       setHeight(divRef.current.clientHeight);
     }

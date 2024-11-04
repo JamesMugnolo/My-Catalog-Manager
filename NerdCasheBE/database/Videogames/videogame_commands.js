@@ -100,7 +100,7 @@ exports.insertGame = async function (game) {
       queryResults.wasDuplicate = false;
     })
     .catch(async (err) => {
-      queryResults.id = await getGameID(game.id);
+      queryResults.id = await getGameID(game.id, release);
       queryResults.wasDuplicate = true;
     });
   return queryResults;
@@ -164,11 +164,9 @@ exports.insertUserGame = async function (user_id, game_id) {
 };
 exports.deleteGame = async function (gameID) {
   let wasDeleted = false;
-  console.log(gameID);
   await pool
     .query("DELETE FROM user_game WHERE game_id = $1", [gameID])
     .then((res) => {
-      console.log(res.count);
       wasDeleted = true;
     })
     .catch((err) => {

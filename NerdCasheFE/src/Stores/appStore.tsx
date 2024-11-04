@@ -11,7 +11,5 @@ export const appStore = configureStore({ reducer: rootReducer });
 export type appState = ReturnType<typeof rootReducer>;
 
 appStore.subscribe(() => {
-  console.log("state updated");
-
-  console.log(appStore.getState());
+  console.log();
 });
