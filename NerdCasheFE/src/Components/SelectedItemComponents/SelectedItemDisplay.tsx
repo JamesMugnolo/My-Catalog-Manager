@@ -177,7 +177,8 @@ export const SelectedGameCard: FunctionComponent<ISelectedGameCard> = ({
             e.stopPropagation();
           }}
         >
-          {currentSelectedItem.description !== null ? (
+          {currentSelectedItem.description !== null ||
+          currentSelectedItem.description !== undefined ? (
             <div style={{ height: "100%" }}>
               <DescriptionSection
                 description={currentSelectedItem.description}

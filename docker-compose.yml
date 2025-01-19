@@ -13,6 +13,7 @@ services:
     container_name: NerdCashe_app
     build: ./NerdCasheFE
     image: nerdcashefe:v1
+    restart: always
     environment:
       REACT_APP_BASE_URL: ${REACT_APP_BASE_URL}
       NODE_ENV: production
@@ -26,6 +27,7 @@ services:
   nerdcasheserver:
     build: ./NerdCasheBE
     container_name: NerdCasheBE
+    restart: always
     depends_on:
       db:
         condition: service_healthy
@@ -50,7 +52,7 @@ services:
       - server-data:/var/
   db:
     image: postgres
-    container_name: todo_db
+    container_name: nerdcashe_db
     restart: always
     volumes:
       - ./NerdCasheBE/database/migrations/sql/1-nerd-cashe-dbcreation.sql:/docker-entrypoint-initdb.d/schema.sql
