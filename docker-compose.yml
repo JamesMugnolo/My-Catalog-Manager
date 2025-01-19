@@ -60,7 +60,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DATABASE}
     ports:
-      - "5432:5432"
+      - "15432:5432"
     networks:
       nerd-cashe-network:
         ipv4_address: 172.28.127.5
