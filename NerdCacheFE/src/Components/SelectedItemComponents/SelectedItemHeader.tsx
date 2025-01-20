@@ -27,23 +27,25 @@ export const SelectedItemHeader: FunctionComponent<ISelectedItemHeader> = ({
   });
   return (
     <>
-      <div className={SelectedItemHeaderStyles.headerContainer}>
-        <div
-          className={SelectedItemHeaderStyles.contributorContainer}
-          style={{
-            height: height,
-            minHeight: height,
-          }}
-        >
-          <DropdownMenu
-            menuItems={items}
-            title={title}
-            dRef={divRef}
-            setIsExpanded={setIsContributorListExpanded}
-            isExpanded={isContributorListExpanded}
-          ></DropdownMenu>
+      {items.length > 0 && (
+        <div className={SelectedItemHeaderStyles.headerContainer}>
+          <div
+            className={SelectedItemHeaderStyles.contributorContainer}
+            style={{
+              height: height,
+              minHeight: height,
+            }}
+          >
+            <DropdownMenu
+              menuItems={items}
+              title={title}
+              dRef={divRef}
+              setIsExpanded={setIsContributorListExpanded}
+              isExpanded={isContributorListExpanded}
+            ></DropdownMenu>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

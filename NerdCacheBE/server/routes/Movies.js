@@ -111,7 +111,7 @@ function formatItemData(item, directors, cast) {
     rating: Math.round(item.vote_average * 10), //vote_average is given in decimal form
     release_date: new Date(item.release_date),
     image_url: `https://image.tmdb.org/t/p/original${item.poster_path}`,
-    description: item.overview,
+    description: item.overview ? item.overview : null,
     directors: directors,
     cast: cast,
     runtime: item.runtime,
