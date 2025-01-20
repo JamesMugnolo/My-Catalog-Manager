@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon -L app.js node --trace-warnings",
-    "client": "cd .. && cd NerdCasheFE && npm start",
+    "client": "cd .. && cd NerdCacheFE && npm start",
     "start": "concurrently \"npm run dev\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docker-start": "cd .. && docker start bb19a2423034 && docker start 77f64e377ab1 && docker start b00ef48cda00",

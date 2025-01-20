@@ -1,6 +1,6 @@
 services:
   cloudflaretunnel:
-    container_name: nerdcashetunnel
+    container_name: NerdCache-tunnel
     image: cloudflare/cloudflared:latest
     restart: unless-stopped
     environment:
@@ -9,10 +9,10 @@ services:
     networks:
       nerd-cashe-network:
         ipv4_address: 172.28.127.8
-  nerdcasheapp:
-    container_name: NerdCashe_app
-    build: ./NerdCasheFE
-    image: nerdcashefe:v1
+  nerdcacheapp:
+    container_name: NerdCache_app
+    build: ./NerdCacheFE
+    image: nerdcachefe:v1
     restart: always
     environment:
       REACT_APP_BASE_URL: ${REACT_APP_BASE_URL}
@@ -24,9 +24,10 @@ services:
         ipv4_address: 172.28.127.7
     volumes:
       - app-data:/var/www/html
-  nerdcasheserver:
-    build: ./NerdCasheBE
-    container_name: NerdCasheBE
+  nerdcacheserver:
+    build: ./NerdCacheBE
+    container_name: NerdCache-server
+    image: nerdcachebe:v1
     restart: always
     depends_on:
       db:
@@ -52,10 +53,10 @@ services:
       - server-data:/var/
   db:
     image: postgres
-    container_name: nerdcashe_db
+    container_name: NerdCache_db
     restart: always
     volumes:
-      - ./NerdCasheBE/database/migrations/sql/1-nerd-cashe-dbcreation.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./NerdCacheBE/database/migrations/sql/1-nerd-cache-dbcreation.sql:/docker-entrypoint-initdb.d/schema.sql
       - pg-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${DB_USER}

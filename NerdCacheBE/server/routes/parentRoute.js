@@ -1,8 +1,8 @@
 const express = require("express");
-const users = require("./Users");
-const videogames = require("./Videogames");
-const movies = require("./Movies");
-const books = require("./Books");
+const users = require("./Users.js");
+const videogames = require("./Videogames.js");
+const movies = require("./Movies.js");
+const books = require("./Books.js");
 const verifyJWT = require("../middleware/verifyJWT.js");
 let router = express.Router();
 

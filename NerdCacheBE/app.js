@@ -5,7 +5,7 @@ const {
   credentials,
   corsOptions,
 } = require("./server/middleware/verifyOrigin.js");
-const apiRouter = require("./server/routes/parentRoute");
+const apiRouter = require("./server/routes/parentRoute.js");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 

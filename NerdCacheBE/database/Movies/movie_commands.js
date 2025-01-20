@@ -1,4 +1,4 @@
-const dbconfig = require("../../database/db.js");
+const dbconfig = require("../db.js");
 const pool = dbconfig.pool;
 
 let queryResults = { id: null, wasDuplicate: false };

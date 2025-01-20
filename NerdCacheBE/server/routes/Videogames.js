@@ -1,6 +1,6 @@
 const express = require("express");
 let router = express.Router();
-const igdbClient = require("../config/igdbConfig");
+const igdbClient = require("../config/igdbConfig.js");
 
 const {
   insertGame,
@@ -51,8 +51,8 @@ function FormatConsoleTitles(title) {
     return title.replace("Nintendo", "");
   } else if (title.includes("PC")) {
     return "PC";
-  } else if (title.includes("PlayStation")) {
-    return title.replace("PlayStation", "PS");
+  } else if (title.includes("PlayStation ")) {
+    return title.replace("PlayStation ", "PS");
   } else if (
     title.includes("Game Boy Advance") | title.includes("Game Boy Color")
   ) {
@@ -64,14 +64,6 @@ function FormatConsoleTitles(title) {
 function FormatVideogameData(data) {
   var formattedData = [];
   for (const entry of data) {
-    const id = entry.id;
-    const name = entry.name;
-    const rating = Math.round(entry.rating);
-    const release_date = entry.first_release_date * 1000;
-    const image_url =
-      "https:" + entry.cover.url.replace("t_thumb", "t_cover_big");
-    const description = entry.storyline;
-
     let platforms = [];
     for (const platform of entry.platforms) {
       platforms.push(FormatConsoleTitles(platform.name));
@@ -88,14 +80,14 @@ function FormatVideogameData(data) {
       }
     }
     const formattedGame = {
-      id,
-      name,
-      rating,
-      release_date,
-      image_url,
-      description,
-      companies,
-      platforms,
+      id: entry.id,
+      name: entry.name,
+      rating: Math.round(entry.rating),
+      release_date: entry.first_release_date * 1000,
+      image_url: "https:" + entry.cover.url.replace("t_thumb", "t_cover_big"),
+      description: entry.storyline ? entry.storyline : null,
+      companies: companies,
+      platforms: platforms,
     };
     formattedData.push(formattedGame);
   }

@@ -27,7 +27,7 @@ export const Navbar: FunctionComponent = () => {
       <nav className={NavbarStyles.nav}>
         <div className={NavbarStyles.siteTitleContainer}>
           <h1 className={NavbarStyles.siteTitle} style={{ fontSize: "26px" }}>
-            Nerd Cashe
+            Nerd Cache
           </h1>
         </div>
         {isMobileView ? (

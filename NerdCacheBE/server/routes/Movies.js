@@ -105,25 +105,19 @@ router.get("/external/:title", async function (req, res) {
   res.json(formattedItems);
 });
 function formatItemData(item, directors, cast) {
-  const id = item.id;
-  const name = item.original_title;
-  const rating = Math.round(item.vote_average * 10); //vote_average is given in decimal form
-  const release_date = new Date(item.release_date);
-  const image_url = `https://image.tmdb.org/t/p/original${item.poster_path}`;
-  const description = item.overview;
-  const runtime = item.runtime;
   formattedItem = {
-    id,
-    name,
-    rating,
-    release_date,
-    image_url,
-    description,
-    directors,
-    cast,
+    id: item.id,
+    name: item.original_title,
+    rating: Math.round(item.vote_average * 10), //vote_average is given in decimal form
+    release_date: new Date(item.release_date),
+    image_url: `https://image.tmdb.org/t/p/original${item.poster_path}`,
+    description: item.overview,
+    directors: directors,
+    cast: cast,
+    runtime: item.runtime,
   };
 
-  return { ...formattedItem, runtime };
+  return formattedItem;
 }
 
 router.delete("/internal/", async function (req, res) {
