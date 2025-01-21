@@ -1,7 +1,7 @@
 const allowedOrigins = [
   "*",
   "http://localhost:3000",
-  "https://nerdcashe.jm-projects.com",
+  "https://nerdcache.jm-projects.com",
 ];
 
 const credentials = (req, res, next) => {
