@@ -79,6 +79,5 @@ volumes:
   server-data:
 networks:
   nerd-cashe-network:
-    ipam:
-      config:
-        - subnet: 172.28.0.0/16
+    name: JMProjNetwork
+    external: true

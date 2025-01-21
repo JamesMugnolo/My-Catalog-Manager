@@ -6,7 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 import { Provider } from "react-redux";
 import { appStore } from "./Stores/appStore";
-import { BrowserRouter } from "react-router-dom";
+
 if (process.env.NODE_ENV === "production") {
   disableReactDevTools();
 }
